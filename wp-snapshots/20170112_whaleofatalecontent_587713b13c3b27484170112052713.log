@@ -1,0 +1,75 @@
+********************************************************************************
+DUPLICATOR-LITE PACKAGE-LOG: 2017-01-12 05:27:57
+NOTICE: Do NOT post to public sites or forums 
+********************************************************************************
+VERSION:	1.1.26
+WORDPRESS:	4.7.1
+PHP INFO:	7.1.0 | SAPI: apache2handler
+SERVER:		Apache/2.2.31 (Unix) mod_wsgi/3.5 Python/2.7.12 PHP/7.1.0 mod_ssl/2.2.31 OpenSSL/1.0.2j DAV/2 mod_fastcgi/2.4.6 mod_perl/2.0.9 Perl/v5.24.0 
+PHP TIME LIMIT: (0) no time limit imposed 
+PHP MAX MEMORY: 2048M (128M default) 
+MEMORY STACK: 2MB 
+
+********************************************************************************
+DATABASE:
+********************************************************************************
+BUILD MODE:   PHP(query limit - 100)
+MYSQLTIMEOUT: 5000
+MYSQLDUMP:    Not Supported 
+TABLES: total:13 | filtered:0 | create:13 
+FILTERED: [] 
+SQL CREATED: 20170112_whaleofatalecontent_587713b13c3b27484170112052713_database.sql 
+SQL FILE SIZE: 564.77KB (578328) 
+SQL FILE TIME: 2017-01-12 05:27:57 
+SQL RUNTIME: 0.06 sec. 
+
+******************************************************************************** 
+ARCHIVE (ZIP): 
+******************************************************************************** 
+ARCHIVE DIR:  /Users/jason/Sites/else/woat 
+ARCHIVE FILE: 20170112_whaleofatalecontent_587713b13c3b27484170112052713_archive.zip 
+FILTERS: *OFF* 
+DIRS: not set 
+EXTS:  not set 
+---------------------------------------- 
+COMPRESSING 
+SIZE:	24.22MB 
+STATS:	Dirs 170 | Files 1,638 
+SQL ADDED: 20170112_whaleofatalecontent_587713b13c3b27484170112052713_database.sql 
+ZipArchive Object
+(
+    [status] => 0
+    [statusSys] => 0
+    [numFiles] => 1808
+    [filename] => /Users/jason/Sites/else/woat/wp-snapshots/tmp/20170112_whaleofatalecontent_587713b13c3b27484170112052713_archive.zip
+    [comment] => 
+)
+ 
+COMPRESSION RESULT: '1' 
+COMPRESSED SIZE: 9.31MB 
+ARCHIVE RUNTIME: 6.86 sec. 
+MEMORY STACK: 4MB 
+
+******************************************************************************** 
+MAKE INSTALLER: 
+******************************************************************************** 
+Build Start 
+Build Finished 
+Preping for use 
+Template parsed with new data 
+Complete [/Users/jason/Sites/else/woat/wp-snapshots/tmp/20170112_whaleofatalecontent_587713b13c3b27484170112052713_installer.php] 
+Added to archive 
+
+******************************************************************************** 
+INTEGRITY CHECKS: 
+******************************************************************************** 
+SQL File: 564.77KB 
+Installer File: 352.41KB 
+Archive File: 9.31MB  
+
+********************************************************************************
+RECORD ID:[1]
+TOTAL PROCESS RUNTIME: 7.30 sec.
+PEAK PHP MEMORY USED: 4MB
+DONE PROCESSING => 20170112_whaleofatalecontent 2017-01-12 05:28:05
+ 
