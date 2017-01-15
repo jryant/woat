@@ -148,9 +148,84 @@ require get_template_directory() . '/inc/jetpack.php';
 
 
 
-function wpdocs_five_posts_on_homepage( $query ) {
-    if ( $query->is_home() && $query->is_main_query() ) {
-        $query->set( 'page_id', 15 );
-    }
+// function wpdocs_five_posts_on_homepage( $query ) {
+//     if ( $query->is_home() && $query->is_main_query() ) {
+//         $query->set( 'page_id', 15 );
+//     }
+// }
+// add_action( 'pre_get_posts', 'wpdocs_five_posts_on_homepage' );
+
+function enqueue_css_js() {
+    wp_enqueue_style( 'slick_css', get_stylesheet_directory_uri().'/css/slick.css' );
+		wp_enqueue_style( 'slick_css_theme', get_stylesheet_directory_uri().'/css/slick-theme.css' );
+    wp_enqueue_script( 'slick_js', get_template_directory_uri() . '/js/slick.min.js', array(), '1.0.0', true );
+		wp_enqueue_script( 'scrollTo', get_template_directory_uri() . '/js/jquery.scrollTo.min.js', array(), '1.0.0', true );
+		wp_enqueue_script( 'scrollToFixed', get_template_directory_uri() . '/js/jquery-scrolltofixed-min.js', array(), '1.0.0', true );
 }
-add_action( 'pre_get_posts', 'wpdocs_five_posts_on_homepage' );
+add_action( 'wp_enqueue_scripts', 'enqueue_css_js' );
+
+
+
+function display_logos(){
+	$abspath = get_stylesheet_directory()."/assets/logos";
+	$relpath = get_stylesheet_directory_uri()."/assets/logos/";
+	$files = array_diff(scandir($abspath), array('.', '..'));
+	foreach ($files as $file){
+		echo "<li>";
+		echo '<img src="'.$relpath.$file.'">';
+		echo "</li>";
+	}
+}
+
+
+
+function cpt_testimonials() {
+
+	$labels = array(
+		'name'                => _x( 'Testimonials', 'Post Type General Name', 'woat' ),
+		'singular_name'       => _x( 'Testimonial', 'Post Type Singular Name', 'woat' ),
+		'menu_name'           => __( 'Testimonials', 'woat' ),
+		'parent_item_colon'   => __( 'Testimonial', 'woat' ),
+		'all_items'           => __( 'All Testimonials', 'woat' ),
+		'view_item'           => __( 'View Testimonials', 'woat' ),
+		'add_new_item'        => __( 'Add New Testimonial', 'woat' ),
+		'add_new'             => __( 'Add New', 'woat' ),
+		'edit_item'           => __( 'Edit Testimonial', 'woat' ),
+		'update_item'         => __( 'Update Testimonial', 'woat' ),
+		'search_items'        => __( 'Search Testimonial', 'woat' ),
+		'not_found'           => __( 'Not Found', 'woat' ),
+		'not_found_in_trash'  => __( 'Not found in Trash', 'woat' ),
+	);
+
+// Set other options for Custom Post Type
+
+	$args = array(
+		'label'               => __( 'testimonials', 'woat' ),
+		'description'         => __( 'Client testimonials', 'woat' ),
+		'labels'              => $labels,
+		// Features this CPT supports in Post Editor
+		'supports'            => array( 'title', 'editor', 'revisions', 'custom-fields', ),
+		// 'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+		// You can associate this CPT with a taxonomy or custom taxonomy.
+		// 'taxonomies'          => array( 'genres' ),
+		/* A hierarchical CPT is like Pages and can have
+		* Parent and child items. A non-hierarchical CPT
+		* is like Posts.
+		*/
+		'hierarchical'        => false,
+		'public'              => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => true,
+		'show_in_admin_bar'   => true,
+		'menu_position'       => 5,
+		'can_export'          => true,
+		'has_archive'         => false,
+		'exclude_from_search' => true,
+		'publicly_queryable'  => false,
+		'capability_type'     => 'post',
+	);
+
+	register_post_type( 'testimonials', $args );
+}
+add_action( 'init', 'cpt_testimonials', 0 );

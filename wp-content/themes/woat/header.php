@@ -25,12 +25,63 @@ var $j = jQuery.noConflict();
 
 	$j(document).ready(function($){
 		$("#blog h1").each(function() {
-			var text = $(this).text();
+			// var text = $(this).text();
 			// console.log(text);
 			// text = text.replace("***", "<span>");
 			// text = text.replace("!!!", "</span>");
 			// $(this).text(text);
 		});
+
+		$('#monies').slick({
+			autoplay: false,
+			arrows: true,
+			dots: true
+		});
+
+		$("#primary-menu li.menu-item-type-custom a, #menu ul.sections li a, #menu ul.sm li.sub a").click(function(e){
+			// debug: update location bar with hash
+			e.preventDefault();
+			var theurl = $(this).attr("href");
+			console.log(theurl);
+			if(theurl==="#follow-bar"){
+				var new_offset = $(theurl).offset().top-310;
+				$.scrollTo(new_offset, 500);
+			} else {
+				$.scrollTo($(theurl), 500);
+			}
+		});
+
+		var heads = new Array();
+		var heads_pos = new Array();
+		$("#main section").each(function(i, obj){
+			heads[i] = $(obj).attr("id");
+      heads_pos[i] = Math.floor($(obj).offset().top);
+    });
+
+		$(window).scroll(function(){
+			var scroll = $(window).scrollTop();
+      $(heads_pos).each(function(i){
+      	if(scroll >= heads_pos[i]){
+        	$("#menu ul.sections li.active").removeClass("active");
+        	$("#menu ul.sections li."+heads[i]).addClass("active");
+					if(scroll >= heads_pos[3]-300 && scroll < heads_pos[4]+100){
+						$("#menu ul.sections li.active").removeClass("active");
+					}
+      	}
+				if(scroll >= heads_pos[1] && scroll < heads_pos[3]-300){
+					$("#menu").addClass("white");
+				} else {
+					$("#menu").removeClass("white");
+				}
+    	});
+    });
+
+		$('#menu').scrollToFixed({
+			marginTop: 0,
+			zIndex: 1,
+      // limit: $('#follow-bar').offset().top
+		});
+
 	});
 </script>
 

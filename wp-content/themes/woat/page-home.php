@@ -17,6 +17,24 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
+			<div id="menu">
+				<ul class="sections">
+					<li class="about active"><a href="#about">About</a></li>
+					<li class="services"><a href="#services">Services</a></li>
+					<li class="blog"><a href="#blog">Blog</a></li>
+					<li class="portfolio"><a href="<?php echo esc_url( home_url( '/' ) ); ?>/portfolio/">Portfolio</a></li>
+					<li class="contact"><a href="#contact">Contact</a></li>
+				</ul>
+				<ul class="sm">
+					<li class="menu"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="fb"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li	class="tw"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="ig"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="li"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="sub"><a href="#follow-bar"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+				</ul>
+			</div>
+
 
 			<!-- About section -->
 
@@ -76,6 +94,7 @@ get_header(); ?>
 					} else { }
 				?>
 				<footer><?php echo wpautop(get_the_content()); ?></footer>
+				<?php wp_reset_postdata(); ?>
 			</section>
 
 
@@ -92,8 +111,8 @@ get_header(); ?>
 						} else { }
 
 					// echo wpautop(get_the_title());
-					the_post_thumbnail(); ?>
-					<h1><?php echo get_the_title(); ?></h1>
+					echo '<a href="'.get_the_permalink().'">'.get_the_post_thumbnail().'</a>'; ?>
+					<h1><?php echo '<a href="'.get_the_permalink().'">'.get_the_title().'</a>' ?></h1>
 					<span class="meta"><?php echo get_the_date(); ?><span class="sep">&nbsp;&bull;&nbsp;</span><?php echo comments_number("No comments", "1 comment", "% comments"); ?></span>
 					<p><?php echo get_the_excerpt().'... <a href="'.get_the_permalink().'">Continue reading &rarr;</a>' ?></p>
 				</aside>
@@ -109,7 +128,8 @@ get_header(); ?>
 								}
 						} else { }
 
-					echo wpautop(get_the_content()); ?>
+					echo wpautop(get_the_content());
+					wp_reset_postdata(); ?>
 				</article>
 			</section>
 
@@ -118,21 +138,71 @@ get_header(); ?>
 
 			<section id="tests">
 				<ul id="logos">
-					<?php
-						$path = get_stylesheet_directory_uri()."/assets/logos/";
-						echo $path;
-						// $files = scandir($path);
-						$files = array_diff(scandir($path), array('.', '..'));
-						var_dump($files);
-						foreach ($files as $file){
-							echo "<li>";
-							print_r($file);
-							echo "</li>";
-						}
-					?>
+					<?php	display_logos(); ?>
 				</ul>
+				<div id="monies">
+				<?php
+					$args = array( 'post_type' => 'testimonials' );
+					$loop = new WP_Query( $args );
+					while ( $loop->have_posts() ) : $loop->the_post();
+						$client_name = get_post_meta(get_the_id(), "testimonial_client", true);
+						$client_position = get_post_meta(get_the_id(), "testimonial_client_position", true);
+						echo '<div class="testimonial">'.wpautop(get_the_content());
+						echo '<div class="client_name">'.$client_name.'</div>';
+						echo '<div class="client_position">'.$client_position.'</div>';
+						echo '</div>';
+					endwhile;
+					wp_reset_postdata();
+				?>
+				</div>
 			</section>
 
+
+			<!-- Follow bar section -->
+
+			<section id="follow-bar">
+				<form>
+					<span class="follow">
+						<p class="follow-label">Follow Me</p>
+						<ul class="sm">
+							<li class="fb"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+							<li	class="tw"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+							<li class="ig"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+							<li class="li"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+						</ul>
+					</span>
+					<span class="submit">Subscribe</span>
+					<span class="sub_email"><input type="text" name="sub_email" placeholder="youremail@domain.com"></span>
+					<!-- <input type="submit" value="Subscribe"> -->
+				</form>
+			</section>
+
+
+			<!-- Contact section -->
+
+			<section id="contact">
+				<header>
+					<?php
+					$args = array( 'page_id' => 66 );
+					$loop = new WP_Query( $args );
+					while ( $loop->have_posts() ) : $loop->the_post();
+						echo wpautop(get_the_content());
+					endwhile;
+					wp_reset_postdata();
+					?>
+				</header>
+				<form>
+					<label for="contact_Name">Name</label>
+					<input type="text" name="contact_name" placeholder="Name">
+					<label for="contact_Email">Email address</label>
+					<input type="text" name="contact_email" placeholder="Email">
+					<label for="contact_body">Message</label>
+					<textarea name="contact_body" rows="8" cols="80"></textarea>
+					<label for="contact_captcha" class="green">How many letters in the word "Whale"?</label>
+					<input type="text" name="contact_captcha" class="green">
+					<span class="submit">Submit</span>
+				</form>
+			</section>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
