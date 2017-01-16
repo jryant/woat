@@ -27,11 +27,11 @@ get_header(); ?>
 				</ul>
 				<ul class="sm">
 					<li class="menu"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="fb"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li	class="tw"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="ig"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="li"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="sub"><a href="#follow-bar"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="fb extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li	class="tw extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="ig extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="li extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="sub extra"><a href="#follow-bar"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 				</ul>
 			</div>
 
@@ -74,12 +74,15 @@ get_header(); ?>
 						} else { }
 					?>
 					<article class="s<?php echo get_the_id(); ?>">
-						<aside>
+						<aside class="desktop">
 							Starting at
 							<div><span class="dollar-sign">&#36;</span><span class="price"><?php echo $price ?></span>/<span class="unit"><?php echo $unit ?></span></div>
 						</aside>
 						<h1><?php echo get_the_title(); ?></h1>
 						<?php echo wpautop(get_the_content()); ?>
+						<aside class="mobile">
+							<p>Starting at <span class="dollar-sign">&#36;</span><span class="price"><?php echo $price ?></span>/<span class="unit"><?php echo $unit ?></span></p>
+						</aside>
 					</article>
 				<?php wp_reset_postdata(); ?>
 
@@ -101,21 +104,6 @@ get_header(); ?>
 			<!-- Blog section -->
 
 			<section id="blog">
-				<aside class="latest">
-					<?php
-						$the_query = new WP_Query( array( 'orderby' => 'date', 'order' => 'DESC', 'post_limits' => 1 ) );
-						if ( $the_query->have_posts() ) {
-								while ( $the_query->have_posts() ) {
-										$the_query->the_post();
-								}
-						} else { }
-
-					// echo wpautop(get_the_title());
-					echo '<a href="'.get_the_permalink().'">'.get_the_post_thumbnail().'</a>'; ?>
-					<h1><?php echo '<a href="'.get_the_permalink().'">'.get_the_title().'</a>' ?></h1>
-					<span class="meta"><?php echo get_the_date(); ?><span class="sep">&nbsp;&bull;&nbsp;</span><?php echo comments_number("No comments", "1 comment", "% comments"); ?></span>
-					<p><?php echo get_the_excerpt().'... <a href="'.get_the_permalink().'">Continue reading &rarr;</a>' ?></p>
-				</aside>
 				<article>
 					<header>
 						The Blog
@@ -131,6 +119,22 @@ get_header(); ?>
 					echo wpautop(get_the_content());
 					wp_reset_postdata(); ?>
 				</article>
+				<aside class="latest">
+					<?php
+						$the_query = new WP_Query( array( 'orderby' => 'date', 'order' => 'DESC', 'post_limits' => 1 ) );
+						if ( $the_query->have_posts() ) {
+								while ( $the_query->have_posts() ) {
+										$the_query->the_post();
+								}
+						} else { }
+
+					// echo wpautop(get_the_title());
+					echo '<a href="'.get_the_permalink().'">'.get_the_post_thumbnail().'</a>'; ?>
+					<h1><?php echo '<a href="'.get_the_permalink().'">'.get_the_title().'</a>' ?></h1>
+					<span class="meta"><?php echo get_the_date(); ?><span class="sep">&nbsp;&bull;&nbsp;</span><?php echo comments_number("No comments", "1 comment", "% comments"); ?></span>
+					<p><?php echo get_the_excerpt().'... <a href="'.get_the_permalink().'">Continue reading &rarr;</a>' ?></p>
+					<?php wp_reset_postdata(); ?>
+				</aside>
 			</section>
 
 
@@ -171,11 +175,15 @@ get_header(); ?>
 							<li class="li"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 						</ul>
 					</span>
-					<span class="submit">Subscribe</span>
+					<a href="#subscribe" class="open-modal"><span class="submit">Subscribe</span></a>
 					<span class="sub_email"><input type="text" name="sub_email" placeholder="youremail@domain.com"></span>
 					<!-- <input type="submit" value="Subscribe"> -->
 				</form>
 			</section>
+
+			<div id="subscribe" style="display:none;">
+				<h1>Subscribe!</h1>
+			</div>
 
 
 			<!-- Contact section -->

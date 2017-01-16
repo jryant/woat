@@ -1028,7 +1028,6 @@ h1, h2, h3, h4, h5, h6 {
 
 #masthead .site-title {
 	text-indent: -99999px;
-	/*background: url("assets/whale-tale_logo_2017-RGB.png") 0 0 no-repeat;*/
 }
 
 #masthead .logo {
@@ -1059,6 +1058,46 @@ ul#primary-menu li a {
 	color: white;
 }
 
+ul#primary-menu li a:hover:after {
+	height: 2px;
+	background-color: white;
+	width: 50%;
+	display: block;
+	margin: 0 auto;
+	content: "";
+}
+
+@media screen and (max-width: 736px) {
+
+	body {
+		overflow-x: hidden;
+	}
+
+	#masthead {
+		z-index: 0;
+		height: 100vh;
+		background-size: cover;
+	}
+
+	#masthead .logo {
+		max-width: 50vh;
+		margin-top: 25vh;
+	}
+
+	#masthead .site-branding,
+	#masthead #site-navigation {
+		display: none;
+	}
+
+	#about,
+	#services,
+	#blog,
+	#tests,
+	#contact {
+		padding: 10vw !important;
+	}
+
+}
 
 /*--------------------------------------------------------------
 ## Floating menu
@@ -1067,12 +1106,17 @@ ul#primary-menu li a {
 #menu {
 	width: 160px;
 	height: 300px;
-	/*background-color: #ddd;*/
 	float: right;
 	margin: 20px 20px 0 0;
 	position: relative;
 	top: -838px;
 	z-index: 1;
+}
+
+@media screen and (max-width: 736px) {
+	#menu {
+		margin: 5px 5px 0 0;
+	}
 }
 
 #menu ul.sm {
@@ -1093,6 +1137,10 @@ ul#primary-menu li a {
 	background: url("assets/sprites.png");
 	vertical-align: top;
 	cursor: pointer;
+}
+
+#menu ul.sm li.extra {
+	visibility: hidden;
 }
 
 #menu ul.sm li img {
@@ -1136,7 +1184,7 @@ ul#primary-menu li a {
 #menu ul.sections {
 	list-style-type: none;
 	text-align: center;
-	/*float: left;*/
+	visibility: hidden;
 }
 
 #menu ul.sections li {
@@ -1231,7 +1279,7 @@ ul#primary-menu li a {
 }
 
 #about article p {
-	font-family: Lato, serif;
+	font-family: Lato, sans-serif;
 	color: #5222b3;
 	font-size: 1em;
 	line-height: 1.5em;
@@ -1243,6 +1291,31 @@ ul#primary-menu li a {
 	float: left;
 	/*margin-left: 140px;*/
 	background: url("assets/kyla-profile-pic.jpg") 0 0 no-repeat;
+}
+
+@media screen and (max-width: 736px) {
+
+	#about {
+		/*padding: 15vw 5vw;*/
+	}
+
+	#about aside.pic {
+		width: 75vw;
+		height: 75vw;
+		background-size: contain;
+		display: block;
+		float: none;
+		margin: auto;
+	}
+
+	#about article {
+		margin: 5vw 0 0 0;
+	}
+
+	#about article h1 {
+		font-size: 1.3em;
+	}
+
 }
 
 
@@ -1300,6 +1373,9 @@ ul#primary-menu li a {
 	font-size: 0.8em;
 }
 
+#services article aside.desktop { display: block; }
+#services article aside.mobile { display: none; }
+
 #services article h1 {
 	font-family: Montserrat, sans-serif;
 	font-weight: bold;
@@ -1326,6 +1402,61 @@ ul#primary-menu li a {
 	color: white;
 }
 
+@media screen and (max-width: 736px) {
+
+	#services {
+		/*padding: 10vw;*/
+		background-position: right bottom;
+		background-attachment: fixed;
+		background-size: auto;
+	}
+
+	#services header {
+		font-weight: normal;
+	}
+
+	#services article {
+		max-width: none;
+	}
+
+	#services article h1,
+	#services article p {
+		margin-left: 0px;
+	}
+
+	#services article aside.desktop {
+		display: none;
+	}
+
+	#services article aside.mobile {
+		display: block;
+		float: none;
+		width: auto;
+		border: none;
+		height: auto;
+		margin: auto;
+		letter-spacing: 1px;
+		font-weight: 100;
+	}
+
+	#services article aside.mobile p,
+	#services article aside .price,
+	#services article aside .dollar-sign {
+		display: inline;
+		font-size: 0.9em;
+		vertical-align: baseline;
+	}
+
+	#services article aside .unit {
+		font-size: 0.6em;
+		vertical-align: baseline;
+	}
+
+	#services footer {
+		margin-left: 0;
+	}
+
+}
 
 
 /*--------------------------------------------------------------
@@ -1354,14 +1485,14 @@ ul#primary-menu li a {
 	width: 462px;
 	background-color: #bdb1d5;
 	padding: 16px;
-	float: left;
+	/*float: left;*/
 	border-radius: 5px;
 	border: 2px solid white;
 }
 
 #blog aside img {
 	width: 430px;
-	/*height: 240px;*/
+	border: 1px solid #494949;
 }
 
 #blog aside h1 {
@@ -1392,8 +1523,10 @@ ul#primary-menu li a {
 }
 
 #blog article {
-	margin-left: 500px;
-	margin-top: 60px;
+	/*margin-left: 500px;*/
+	margin-top: 20px;
+	float: right;
+	width: 370px; /* debug: mid-sized breakpoint? */
 }
 
 #blog article h1 {
@@ -1409,6 +1542,37 @@ ul#primary-menu li a {
 #blog article p a {
 	color: white;
 }
+
+@media screen and (max-width: 736px) {
+
+	#blog	{
+		/*padding: 10vw;*/
+	}
+
+	#blog article {
+		width: 100%;
+		font-weight: 300;
+		float: none;
+	}
+
+	#blog article header {
+		font-weight: normal;
+	}
+
+	#blog article h1 {
+		font-size: 1.5em;
+	}
+
+	#blog aside {
+		width: 100%;
+	}
+
+	#blog aside img {
+		width: auto;
+	}
+
+}
+
 
 
 /*--------------------------------------------------------------
@@ -1446,8 +1610,14 @@ ul#primary-menu li a {
 	margin: 0 auto 180px auto;
 	padding: 35px 45px;
 	text-align: center;
-	border: 2px solid #5222b3; /* debug: switch to gradient */
-	border-radius: 5px;
+	/*border: 2px solid #5222b3;*/
+	/*border-radius: 5px;*/
+	border-style: solid;
+	border-width: 2px;
+	-moz-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	-webkit-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	-o-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	border-image: url("assets/grad-border.png") 2 fill repeat stretch;
 }
 
 #tests #monies .slick-prev,
@@ -1478,6 +1648,29 @@ ul#primary-menu li a {
 	text-transform: uppercase;
 }
 
+@media screen and (max-width: 736px) {
+	#tests #monies {
+		/*margin-bottom: */
+	}
+
+	#tests #monies .slick-next {
+		right: 80px;
+		top: inherit;
+		bottom: -160px;
+	}
+
+	#tests #monies .slick-prev {
+		left: 80px;
+		top: inherit;
+		bottom: -160px;
+	}
+
+	#tests #monies .slick-dots {
+		visibility: hidden;
+	}
+}
+
+
 
 /*--------------------------------------------------------------
 ## Follow bar section
@@ -1500,7 +1693,7 @@ ul#primary-menu li a {
 }
 
 #follow-bar p.follow-label {
-	font-family: Lato, serif;
+	font-family: Lato, sans-serif;
 	font-size: 0.875em;
 	text-transform: uppercase;
 	color: white;
@@ -1549,7 +1742,7 @@ ul#primary-menu li a {
 }
 
 #follow-bar form input[type=text] {
-	font-family: Lato, serif;
+	font-family: Lato, sans-serif;
 	font-size: 0.875em;
 	border: 1px solid white;
 	border-radius: 5px;
@@ -1570,7 +1763,7 @@ ul#primary-menu li a {
 }
 
 #follow-bar form .submit {
-	font-family: Lato, serif;
+	font-family: Lato, sans-serif;
 	font-size: 0.875em;
 	text-transform: uppercase;
 	color: white;
@@ -1590,6 +1783,42 @@ ul#primary-menu li a {
 	background-color: white;
 }
 
+@media screen and (max-width: 736px) {
+
+	#follow-bar {
+		padding: 0 4vw;
+		overflow: hidden;
+	}
+
+}
+
+@media screen and (max-width: 710px) {
+
+	#follow-bar .follow	{
+		margin-right: 6px;
+		float: none;
+	}
+
+	#follow-bar p.follow-label {
+		margin-right: 6px;
+	}
+
+	#follow-bar form {
+		float: none;
+		text-align: center;
+	}
+
+	#follow-bar form .sub_email {
+		display: none;
+	}
+
+	#follow-bar form .submit {
+		float: none;
+		margin: 22px 0px;
+		vertical-align: bottom;
+	}
+
+}
 
 /*--------------------------------------------------------------
 ## Contact section
@@ -1639,7 +1868,7 @@ ul#primary-menu li a {
 }
 
 #contact form label {
-	font-family: Lato, serif;
+	font-family: Lato, sans-serif;
 	color: #5222b3;
 }
 
@@ -1649,8 +1878,17 @@ ul#primary-menu li a {
 	border-color: #3ACCA7;
 }
 
+#contact form textarea {
+	border-style: solid;
+	border-width: 2px;
+	-moz-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	-webkit-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	-o-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	border-image: url("assets/grad-border.png") 2 fill repeat stretch;
+}
+
 #contact form .submit {
-	font-family: Lato, serif;
+	font-family: Lato, sans-serif;
 	font-weight: bold;
 	text-transform: uppercase;
 	color: #3ACCA7;
@@ -1695,4 +1933,18 @@ ul#primary-menu li a {
 
 #colophon a {
 	color: #3ACCA7;
+}
+
+@media screen and (max-width: 736px) {
+
+	#colophon {
+		font-size: 0.75em;
+	}
+
+	#colophon .site-info .sep {
+		display: block;
+		visibility: hidden;
+		height: 4px;
+	}
+
 }

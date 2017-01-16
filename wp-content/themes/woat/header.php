@@ -64,11 +64,14 @@ var $j = jQuery.noConflict();
       	if(scroll >= heads_pos[i]){
         	$("#menu ul.sections li.active").removeClass("active");
         	$("#menu ul.sections li."+heads[i]).addClass("active");
+					if(scroll >= heads_pos[1]-300 && scroll < heads_pos[1]){
+						$("#menu ul.sections li.active").removeClass("active");
+					}
 					if(scroll >= heads_pos[3]-300 && scroll < heads_pos[4]+100){
 						$("#menu ul.sections li.active").removeClass("active");
 					}
       	}
-				if(scroll >= heads_pos[1] && scroll < heads_pos[3]-300){
+				if(scroll >= heads_pos[1]-300 && scroll < heads_pos[3]-300){
 					$("#menu").addClass("white");
 				} else {
 					$("#menu").removeClass("white");
@@ -78,12 +81,25 @@ var $j = jQuery.noConflict();
 
 		$('#menu').scrollToFixed({
 			marginTop: 0,
-			zIndex: 1,
-      // limit: $('#follow-bar').offset().top
+			zIndex: 1
+		});
+
+		$("#menu .sm .menu").toggle(function(){
+			$("#menu .sections, #menu .extra").css("visibility", "visible");
+			// $("#menu .extra").slideDown(100);
+		}, function(){
+			$("#menu .sections, #menu .extra").css("visibility", "hidden");
+			// $("#menu .extra").slideUp(300);
+		});
+
+		$("a.open-modal").modal({
+			fadeDuration: 250
 		});
 
 	});
 </script>
+
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:400,700" rel="stylesheet">
 
 </head>
 
