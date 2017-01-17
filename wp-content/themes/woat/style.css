@@ -1002,13 +1002,24 @@ object {
 --------------------------------------------------------------*/
 
 body {
-	background-color: #ccc;
+	background-color: #fff;
 }
 
 body div.site {
+	/*max-width: 1372px;*/
+	/*margin: 0 auto;*/
+	background-color: white;
+}
+
+#about > div,
+#services > div,
+#blog > div,
+#tests > div,
+#follow-bar > div,
+#contact > div,
+body.single article > div {
 	max-width: 1372px;
 	margin: 0 auto;
-	background-color: white;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1020,8 +1031,11 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 
 #masthead {
-	height: 838px;
+	/*height: 838px;*/
+	height: 100vh;
+	min-height: 580px;
 	background: url("assets/banner-bg.jpg") 0 0 no-repeat;
+	background-size: cover;
 	position: relative;
 	z-index: 10;
 }
@@ -1031,10 +1045,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #masthead .logo {
-	width: 284px;
-	height: 284px;
 	display: block;
-	margin: 316px auto 80px auto;
+	/*margin: 316px auto 80px auto;*/
+	margin: 0 auto;
+	margin-top: 25vh;
+	margin-bottom: 10vh;
+	max-width: 284px;
+}
+
+#masthead .logo img {
+	max-width: 284px;
+	max-height: 284px;
+	width: 100%;
+	/*max-width: 50vh;*/
 }
 
 #site-navigation {
@@ -1042,6 +1065,8 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 	font-size: 1.5em;
 	text-transform: uppercase;
+	position: absolute;
+	bottom: 15vh;
 }
 
 ul#primary-menu {
@@ -1058,13 +1083,16 @@ ul#primary-menu li a {
 	color: white;
 }
 
-ul#primary-menu li a:hover:after {
-	height: 2px;
-	background-color: white;
+ul#primary-menu li a:after {
+	height: 4px;
 	width: 50%;
 	display: block;
 	margin: 0 auto;
 	content: "";
+}
+
+ul#primary-menu li a:hover:after {
+	background-color: white;
 }
 
 @media screen and (max-width: 736px) {
@@ -1075,8 +1103,8 @@ ul#primary-menu li a:hover:after {
 
 	#masthead {
 		z-index: 0;
-		height: 100vh;
-		background-size: cover;
+		/*height: 100vh;*/
+		/*background-size: cover;*/
 	}
 
 	#masthead .logo {
@@ -1103,19 +1131,25 @@ ul#primary-menu li a:hover:after {
 ## Floating menu
 --------------------------------------------------------------*/
 
+#main { position: relative; }
+
 #menu {
 	width: 160px;
 	height: 300px;
 	float: right;
 	margin: 20px 20px 0 0;
-	position: relative;
-	top: -838px;
+	/*position: relative;*/
+	/*top: -838px;*/
+	position: absolute;
+	top: -320px;
+	right: 0;
 	z-index: 1;
 }
 
 @media screen and (max-width: 736px) {
 	#menu {
 		margin: 5px 5px 0 0;
+		top: -100vh;
 	}
 }
 
@@ -1476,7 +1510,7 @@ ul#primary-menu li a:hover:after {
 	font-family: Montserrat, sans-serif;
 	font-weight: bold;
 	font-size: 2em;
-	margin-bottom: 1.5em;
+	margin-bottom: 1em;
 	text-transform: uppercase;
 }
 
@@ -1485,14 +1519,14 @@ ul#primary-menu li a:hover:after {
 	width: 462px;
 	background-color: #bdb1d5;
 	padding: 16px;
-	/*float: left;*/
+	float: left;
 	border-radius: 5px;
 	border: 2px solid white;
 }
 
 #blog aside img {
 	width: 430px;
-	border: 1px solid #494949;
+	/*height: 240px;*/
 }
 
 #blog aside h1 {
@@ -1523,16 +1557,15 @@ ul#primary-menu li a:hover:after {
 }
 
 #blog article {
-	/*margin-left: 500px;*/
+	margin-left: 500px;
 	margin-top: 20px;
-	float: right;
-	width: 370px; /* debug: mid-sized breakpoint? */
 }
 
 #blog article h1 {
 	font-family: Montserrat, sans-serif;
 	font-weight: normal;
 	font-size: 1.75em;
+	line-height: 1em;
 }
 
 #blog article p {
@@ -1541,6 +1574,10 @@ ul#primary-menu li a:hover:after {
 
 #blog article p a {
 	color: white;
+}
+
+#blog aside.mobile {
+	display: none;
 }
 
 @media screen and (max-width: 736px) {
@@ -1553,6 +1590,7 @@ ul#primary-menu li a:hover:after {
 		width: 100%;
 		font-weight: 300;
 		float: none;
+		margin: 0;
 	}
 
 	#blog article header {
@@ -1563,8 +1601,14 @@ ul#primary-menu li a:hover:after {
 		font-size: 1.5em;
 	}
 
-	#blog aside {
+	#blog aside.desktop {
+		display: none;
+	}
+
+	#blog aside.mobile {
 		width: 100%;
+		display: block;
+		float: none;
 	}
 
 	#blog aside img {
@@ -1649,6 +1693,15 @@ ul#primary-menu li a:hover:after {
 }
 
 @media screen and (max-width: 736px) {
+
+	#tests #logos li {
+		margin: 5vw;
+	}
+
+	#tests #logos li img {
+		max-width: 30vw;
+	}
+
 	#tests #monies {
 		/*margin-bottom: */
 	}
@@ -1734,14 +1787,16 @@ ul#primary-menu li a:hover:after {
 #follow-bar .sm li.li { background-position: -5px 323px; }
 #follow-bar .sm li.li:hover { background-position: 34px 323px; }
 
-#follow-bar form {
+#follow-bar form,
+#subscribe form {
 	display: inline-block;
 	float: right;
 	overflow: hidden;
 	width: 100%;
 }
 
-#follow-bar form input[type=text] {
+#follow-bar form input[type=text],
+#subscribe form input[type=text] {
 	font-family: Lato, sans-serif;
 	font-size: 0.875em;
 	border: 1px solid white;
@@ -1762,7 +1817,8 @@ ul#primary-menu li a:hover:after {
 	margin: 20px 0;
 }
 
-#follow-bar form .submit {
+#follow-bar form .submit,
+#subscribe form .submit {
 	font-family: Lato, sans-serif;
 	font-size: 0.875em;
 	text-transform: uppercase;
@@ -1782,6 +1838,62 @@ ul#primary-menu li a:hover:after {
 	color: #5222b3;
 	background-color: white;
 }
+
+#subscribe {
+	background-color: #5222b3;
+	color: #8665ca;
+	text-align: center;
+	max-width: 65%;
+}
+
+#subscribe h1 {
+	font-family: Montserrat, sans-serif;
+	font-weight: normal;
+	font-size: 2em;
+	text-transform: uppercase;
+	color: white;
+}
+
+#subscribe form {
+	padding-bottom: 2em;
+}
+
+#subscribe form input[type="text"] {
+	margin: 0;
+	width: 80%;
+	min-width: 100px;
+}
+
+#subscribe form .submit {
+	margin: 0;
+}
+
+.modal {
+	-webkit-border-radius: 0px !important;
+	-moz-border-radius: 0px !important;
+	-o-border-radius: 0px !important;
+	-ms-border-radius: 0px !important;
+	border-radius: 0px !important;
+	-webkit-box-shadow: 0px 0px 5px #000 !important;
+	-moz-box-shadow: 0 0 5px #000 !important;
+	-o-box-shadow: 0 0 5px #000 !important;
+	-ms-box-shadow: 0 0 5px #000 !important;
+	box-shadow: 0px 0px 5px #000 !important;
+}
+
+@media screen and (max-width: 1100px) {
+
+	#subscribe form .submit {
+		margin: 20px 0;
+		float: none;
+	}
+
+	#subscribe form input[type="text"] {
+		width: 100%;
+	}
+
+}
+
 
 @media screen and (max-width: 736px) {
 
@@ -1947,4 +2059,296 @@ ul#primary-menu li a:hover:after {
 		height: 4px;
 	}
 
+}
+
+
+
+/*--------------------------------------------------------------
+# Blog main
+--------------------------------------------------------------*/
+
+body.blog #menu-item-68 a:after {
+	background-color: white;
+}
+
+
+
+/*--------------------------------------------------------------
+# Blog single
+--------------------------------------------------------------*/
+
+body.single #masthead {
+	/*display: none;*/
+	height: 0px;
+	min-height: 0px;
+	background: none;
+}
+
+body.single #masthead .logo {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	width: 100px;
+	margin: 0;
+}
+
+body.single #menu {
+	top: 20px;
+}
+
+body.single .featured img {
+	width: 100%;
+}
+
+body.single article.post {
+	margin: 0 100px;
+}
+
+body.single article.post > div {
+	font-family: Lato, sans-serif;
+	font-size: 1.125em;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	padding: 30px;
+	border-style: solid;
+	border-width: 2px;
+	-moz-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	-webkit-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	-o-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	border-image: url("assets/grad-border.png") 2 fill repeat stretch;
+}
+
+body.single article.post header h1 {
+	font-family: Montserrat, sans-serif;
+	font-weight: bold;
+	font-size: 2em;
+	text-transform: uppercase;
+	color: #5222b3;
+	margin: 0;
+}
+
+body.single article.post .entry-content {
+	margin: 0;
+}
+
+body.single article.post footer ul.post-categories {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+body.single article.post footer ul.post-categories li {
+	display: inline-block;
+	font-family: Lato, sans-serif;
+	font-size: 0.75em;
+	text-transform: uppercase;
+	border: 1px solid #5222b3;
+	line-height: 2em;
+	margin-right: 5px;
+
+}
+
+body.single article.post footer .post-categories a {
+	padding: 10px;
+	text-decoration: none;
+	color: #5222b3;
+}
+
+body.single #bio {
+	margin: 0 100px;
+	/*padding-bottom: 30px;*/
+	font-family: Lato, sans-serif;
+	color: #5222b3;
+}
+
+body.single #bio > div {
+	max-width: 1372px;
+	margin: 0 auto;
+	border-bottom: 2px solid #5222b3;
+	min-height: 220px; /* debug: better method? */
+}
+
+body.single #bio aside {
+	float: left;
+	margin-right: 30px;
+}
+
+body.single #bio .bio h1 {
+	font-family: Montserrat, sans-serif;
+	font-weight: bold;
+	font-size: 1.25em;
+	text-transform: uppercase;
+}
+
+body.single #bio .bio p {
+	margin-bottom: 0;
+}
+
+body.single #bio ul.sm {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+body.single #bio .sm li {
+	height: 30px;
+	width: 30px;
+	margin: 20px 2px;
+	display: inline-block;
+	background: url("assets/sprites.png");
+	vertical-align: top;
+}
+
+body.single #bio .sm li img {
+	height: 30px;
+	width: 30px;
+}
+
+body.single #bio ul.sm li.fb { background-position: -5px -43px; }
+body.single #bio ul.sm li.fb:hover { background-position: -44px -43px; }
+body.single #bio ul.sm li.tw { background-position: -5px -81px; }
+body.single #bio ul.sm li.tw:hover { background-position: 34px -81px; }
+body.single #bio ul.sm li.ig { background-position: -5px -119px; }
+body.single #bio ul.sm li.ig:hover { background-position: 34px -119px; }
+body.single #bio ul.sm li.li { background-position: -5px -157px; }
+body.single #bio ul.sm li.li:hover { background-position: 34px -157px; }
+body.single #bio ul.sm li.contact,
+body.single #bio ul.sm li.subscribe {
+	background: none;
+	width: auto;
+}
+
+body.single #bio ul.sm li.contact .submit,
+body.single #bio ul.sm li.subscribe .submit {
+	font-size: 0.875em;
+	text-transform: uppercase;
+	color: #5222b3;
+	height: 30px;
+	line-height: 28px;
+	padding: 0 25px;
+	display: inline-block;
+	border: 1px solid #5222b3;
+	border-radius: 5px;
+}
+
+body.single #bio ul.sm li.contact .submit {
+	color: white;
+	border: none;
+	line-height: 30px;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5222b3+0,3acca7+100 */
+	background: rgb(82,34,179); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(82,34,179,1) 0%, rgba(58,204,167,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(82,34,179,1) 0%,rgba(58,204,167,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(82,34,179,1) 0%,rgba(58,204,167,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5222b3', endColorstr='#3acca7',GradientType=0 ); /* IE6-9 */
+}
+
+body.single #bio ul.sm li.contact .submit:hover,
+body.single #bio ul.sm li.subscribe .submit:hover {
+	cursor: pointer;
+	color: white;
+	background-color: #5222b3;
+}
+
+body.single .post-navigation {
+	padding: 40px 0;
+	margin: 0 100px;
+	font-family: Lato, sans-serif;
+}
+body.single .post-navigation > div {
+	max-width: 1372px;
+	margin: 0 auto;
+	border-bottom: 2px solid #3ACCA7;
+	min-height: 120px; /* debug: better method? */
+}
+
+body.single .post-navigation .nav-links span {
+	font-weight: bold;
+	display: block;
+	margin-top: 15px;
+}
+
+body.single .post-navigation .nav-links .nav-next .arrow,
+body.single .post-navigation .nav-links .nav-previous .arrow {
+	width: 40px;
+	height: 79px;
+	background: url("assets/sprites.png");
+	margin: 0 30px;
+}
+
+body.single .post-navigation .nav-links .nav-previous .arrow {
+	left: -110px;
+	background-position: 604px 170px;
+	float: left;
+}
+
+body.single .post-navigation .nav-links .nav-next .arrow {
+	right: -110px;
+	background-position: 684px 81px;
+	float: right;
+}
+
+body.single .post-navigation .nav-links a {
+	color: #5222b3;
+	text-decoration: none;
+}
+
+body.single #meta > div {
+}
+
+body.single #meta,
+body.single #comments {
+	/*padding: 40px 0;*/
+	margin: 0 100px;
+}
+
+body.single #meta > div {
+	max-width: 1372px;
+	margin: 0 auto;
+}
+
+body.single #meta .meta {
+	font-family: Lato, sans-serif;
+	font-size: 0.9em;
+	color: #5222b3;
+}
+
+body.single #meta .note {
+	padding: 20px;
+	color: #5222b3;
+	border-style: solid;
+	border-width: 1px;
+	margin-top: 40px;
+	-moz-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	-webkit-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	-o-border-image: url("assets/grad-border.png") 2 repeat stretch;
+	border-image: url("assets/grad-border.png") 2 fill repeat stretch;
+	min-height: 105px; /* debug: better method? */
+}
+
+body.single #meta .note aside {
+	float: left;
+	margin-right: 30px;
+}
+
+body.single #meta .note h1 {
+	font-family: Montserrat, sans-serif;
+	font-weight: bold;
+	font-size: 1.25em;
+	text-transform: uppercase;
+	margin: 0;
+}
+
+body.single #meta .note p {
+	margin: 0;
+}
+
+body.single #coms {
+	margin: 0 100px;
+}
+
+body.single #comments {
+	max-width: 1372px;
+	margin: 0 auto;
 }

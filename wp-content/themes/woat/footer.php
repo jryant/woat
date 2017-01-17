@@ -13,6 +13,16 @@
 
 	</div><!-- #content -->
 
+	<div id="subscribe" style="display:none;">
+		<h1>Subscribe</h1>
+		<p>Subscribe to my newsletter and be the first to know about new posts.
+		<br>No spammy stuff, I promise &mdash; just awesome content.</p>
+		<form>
+			<span class="sub_email"><input type="text" name="sub_email" placeholder="youremail@domain.com"></span>
+			<a href="#" class="open-modal"><span class="submit">Subscribe</span></a>
+		</form>
+	</div>
+
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info">
 			Whale Of A Tale Content &copy; <?php echo date('Y'); ?>
