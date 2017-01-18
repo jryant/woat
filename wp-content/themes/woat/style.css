@@ -1051,6 +1051,9 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 25vh;
 	margin-bottom: 10vh;
 	max-width: 284px;
+	background-image: url("assets/whale-tale_logo_2017-RGB.png");
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 
 #masthead .logo img {
@@ -1110,6 +1113,12 @@ ul#primary-menu li a:hover:after {
 	#masthead .logo {
 		max-width: 50vh;
 		margin-top: 25vh;
+		background-image: url("assets/whale-tale_logo_2017-RGB_white-500x500.png");
+	}
+
+	#masthead .logo img {
+		max-width: none;
+		max-height: none;
 	}
 
 	#masthead .site-branding,
@@ -1324,7 +1333,12 @@ ul#primary-menu li a:hover:after {
 	height: 392px;
 	float: left;
 	/*margin-left: 140px;*/
-	background: url("assets/kyla-profile-pic.jpg") 0 0 no-repeat;
+	background: url("assets/kyla-profile-colour-pic.png") 0 0 no-repeat;
+}
+
+#about aside.pic img {
+	opacity: 1;
+	/*transition: opacity 4s;*/
 }
 
 @media screen and (max-width: 736px) {
@@ -1333,7 +1347,8 @@ ul#primary-menu li a:hover:after {
 		/*padding: 15vw 5vw;*/
 	}
 
-	#about aside.pic {
+	#about aside.pic,
+	#about aside.pic img {
 		width: 75vw;
 		height: 75vw;
 		background-size: contain;
@@ -1499,11 +1514,14 @@ ul#primary-menu li a:hover:after {
 
 #blog	{
 	background-color: #5222b3;
-	padding: 230px 215px 230px 105px;
 	font-family: Lato, sans-serif;
 	font-size: 1em;
 	line-height: 1.25em;
 	color: white;
+}
+
+#blog > div {
+	padding: 230px 215px 230px 105px;
 }
 
 #blog header {
@@ -1626,24 +1644,40 @@ ul#primary-menu li a:hover:after {
 #tests {
 	padding-top: 125px;
 	text-align: center;
+	overflow-x: hidden;
 }
 
 #tests #logos {
-	list-style-type: none;
-	margin: 0 auto;
-	margin-bottom: 120px;
+	/*list-style-type: none;*/
+	/*margin: 0 auto;*/
+	/*margin-bottom: 120px;*/
 	padding: 0;
-	max-width: 840px;
+	/*max-width: 840px;*/
 }
 
 #tests #logos li {
-	display: inline-block;
-	margin: 0 25px 25px 25px;
+	/*display: inline-block;*/
+	/*margin: 0 25px 25px 25px;*/
 }
 
 #tests #logos li img {
 	max-height: 110px;
 	vertical-align: middle;
+}
+
+.bx-wrapper { /* debug */
+	/*width: 100vw !important;*/
+	/*max-width: 100vw !important;*/
+	/*position: relative !important;
+	left: -14vw !important;;*/
+}
+
+.bx-wrapper .bx-viewport {
+	/*overflow: visible !important;*/
+	box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	/*overflow: visible !important;*/
 }
 
 #tests #monies {
@@ -1662,6 +1696,10 @@ ul#primary-menu li a:hover:after {
 	-webkit-border-image: url("assets/grad-border.png") 2 repeat stretch;
 	-o-border-image: url("assets/grad-border.png") 2 repeat stretch;
 	border-image: url("assets/grad-border.png") 2 fill repeat stretch;
+}
+
+#tests .contain {
+	margin: 0 150px;
 }
 
 #tests #monies .slick-prev,
@@ -2142,16 +2180,21 @@ body.single article.post footer ul.post-categories li {
 	font-family: Lato, sans-serif;
 	font-size: 0.75em;
 	text-transform: uppercase;
-	border: 1px solid #5222b3;
-	line-height: 2em;
+	/*line-height: 1.5em;*/
 	margin-right: 5px;
 
 }
 
 body.single article.post footer .post-categories a {
-	padding: 10px;
+	padding: 6px 10px;
 	text-decoration: none;
 	color: #5222b3;
+	border: 1px solid #5222b3;
+}
+
+body.single article.post footer .post-categories a:hover {
+	background-color: #5222b3;
+	color: white;
 }
 
 body.single #bio {

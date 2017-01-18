@@ -75,7 +75,7 @@ var $j = jQuery.noConflict();
 						$("#menu ul.sections li.active").removeClass("active");
 					}
       	}
-				if(scroll >= heads_pos[1]-300 && scroll < heads_pos[3]-300){
+				if(scroll >= heads_pos[1]-300 && scroll < heads_pos[3]-200){
 					$("#menu").addClass("white");
 				} else {
 					$("#menu").removeClass("white");
@@ -120,6 +120,28 @@ var $j = jQuery.noConflict();
 			$("#masthead").css("background-position-x","right");
 		};
 
+		$(window).scroll(function(){
+			var picY = Math.floor($("#about").offset().top);
+			var scroll2 = $(window).scrollTop();
+			var opacity_perc = scroll2/picY;
+			// console.log(scroll2+" / "+picY+" = "+opacity_perc);
+			$("#about aside.pic img").css("opacity",opacity_perc);
+		});
+
+		$("#logos").bxSlider({
+			minSlides: 4,
+		  maxSlides: 10,
+		  slideWidth: 200,
+		  slideMargin: 20,
+			ticker: true,
+  		speed: 100000,
+			randomStart: true,
+			// startSlide: 10,
+			preloadImages: "all"
+		});
+		// var box = $('#box').data("plugin_tinycarousel");
+		// console.log(box);
+
 	});
 </script>
 
@@ -132,7 +154,7 @@ var $j = jQuery.noConflict();
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'woat' ); ?></a>
 
 	<header id="masthead" class="site-header" role="banner">
-		<div class="logo"><a href="<?php echo get_site_url(); ?>"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/whale-tale_logo_2017-RGB.png" alt="logo"></a></div>
+		<div class="logo"><a href="<?php echo get_site_url(); ?>"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png" alt="logo"></a></div>
 		<div class="site-branding">
 			<?php
 			if ( is_front_page() && is_home() ) : ?>

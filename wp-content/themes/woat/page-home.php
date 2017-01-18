@@ -48,7 +48,7 @@ get_header(); ?>
 			?>
 			<section id="about">
 				<div>
-					<aside class="pic"></aside>
+					<aside class="pic"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/kyla-profile-pic.png" alt="Kyla Sims profile photo"></aside>
 					<article>
 						<?php echo wpautop(get_the_content()); ?>
 					</article>
@@ -166,23 +166,31 @@ get_header(); ?>
 
 			<section id="tests">
 				<div>
-					<ul id="logos">
-						<?php	display_logos(); ?>
-					</ul>
-					<div id="monies">
-					<?php
-						$args = array( 'post_type' => 'testimonials' );
-						$loop = new WP_Query( $args );
-						while ( $loop->have_posts() ) : $loop->the_post();
-							$client_name = get_post_meta(get_the_id(), "testimonial_client", true);
-							$client_position = get_post_meta(get_the_id(), "testimonial_client_position", true);
-							echo '<div class="testimonial">'.wpautop(get_the_content());
-							echo '<div class="client_name">'.$client_name.'</div>';
-							echo '<div class="client_position">'.$client_position.'</div>';
-							echo '</div>';
-						endwhile;
-						wp_reset_postdata();
-					?>
+					<div class="slider">
+						<!-- <a class="buttons prev" href="#">&#60;</a> -->
+						<div class="viewport">
+							<ul id="logos">
+								<?php	display_logos(); ?>
+							</ul>
+						</div>
+						<!-- <a class="buttons next" href="#">&#62;</a> -->
+					</div>
+					<div class="contain">
+						<div id="monies">
+						<?php
+							$args = array( 'post_type' => 'testimonials' );
+							$loop = new WP_Query( $args );
+							while ( $loop->have_posts() ) : $loop->the_post();
+								$client_name = get_post_meta(get_the_id(), "testimonial_client", true);
+								$client_position = get_post_meta(get_the_id(), "testimonial_client_position", true);
+								echo '<div class="testimonial">'.wpautop(get_the_content());
+								echo '<div class="client_name">'.$client_name.'</div>';
+								echo '<div class="client_position">'.$client_position.'</div>';
+								echo '</div>';
+							endwhile;
+							wp_reset_postdata();
+						?>
+						</div>
 					</div>
 				</div>
 			</section>
