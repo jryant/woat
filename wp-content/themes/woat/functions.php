@@ -183,6 +183,33 @@ function display_logos(){
 }
 
 
+add_action( 'init', 'my_new_default_post_type', 1 );
+function my_new_default_post_type() {
+
+    register_post_type( 'post', array(
+        'labels' => array(
+            'name_admin_bar' => _x( 'Post', 'add new on admin bar' ),
+        ),
+        'public'  => true,
+        '_builtin' => false,
+        '_edit_link' => 'post.php?post=%d',
+        'capability_type' => 'post',
+        'map_meta_cap' => true,
+        'hierarchical' => false,
+        'rewrite' => array( 'slug' => 'blog' ),
+        'query_var' => false,
+        'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'post-formats' ),
+    ) );
+}
+
+
+// function wpa37911_permastructs(){
+//     global $wp_rewrite;
+//     $wp_rewrite->extra_permastructs['category']['struct'] = '/category/%category%';
+//     $wp_rewrite->extra_permastructs['post_tag']['struct'] = '/tag/%post_tag%';
+// }
+// add_action( 'init', 'wpa37911_permastructs' );
+
 
 function cpt_testimonials() {
 
@@ -273,13 +300,13 @@ function cpt_portfolio() {
 		'public'              => true,
 		'show_ui'             => true,
 		'show_in_menu'        => true,
-		'show_in_nav_menus'   => false,
+		'show_in_nav_menus'   => true,
 		'show_in_admin_bar'   => true,
 		'menu_position'       => 20,
 		'can_export'          => true,
 		'has_archive'         => true,
 		'exclude_from_search' => true,
-		'publicly_queryable'  => false,
+		'publicly_queryable'  => true,
 		'capability_type'     => 'post',
 	);
 

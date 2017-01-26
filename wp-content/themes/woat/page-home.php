@@ -22,7 +22,7 @@ get_header(); ?>
 					<li class="about"><a href="#about">About</a></li>
 					<li class="services"><a href="#services">Services</a></li>
 					<li class="blog"><a href="#blog">Blog</a></li>
-					<li class="portfolio"><a href="<?php echo esc_url( home_url( '/' ) ); ?>/portfolio/">Portfolio</a></li>
+					<li class="portfolio"><a href="<?php echo esc_url( home_url( '/portfolio/' ) ); // debug this ?>">Portfolio</a></li>
 					<li class="contact"><a href="#contact">Contact</a></li>
 				</ul>
 				<ul class="sm">

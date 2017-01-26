@@ -103,7 +103,7 @@ var $j = jQuery.noConflict();
 			}
 		});
 
-		$("a.open-modal").click(function(){
+		$("a.open-modal, #menu-item-119 a").click(function(){
 			$(this).modal({
 				fadeDuration: 250,
 				showClose: false
@@ -120,13 +120,13 @@ var $j = jQuery.noConflict();
 			$("#masthead").css("background-position-x","right");
 		};
 
-		$(window).scroll(function(){
-			var picY = Math.floor($("#about").offset().top); // debug?
-			var scroll2 = $(window).scrollTop();
-			var opacity_perc = scroll2/picY;
-			// console.log(scroll2+" / "+picY+" = "+opacity_perc);
-			$("#about aside.pic img").css("opacity",opacity_perc);
-		});
+		// $(window).scroll(function(){
+		// 	var picY = Math.floor($("#about").offset().top); // debug?
+		// 	var scroll2 = $(window).scrollTop();
+		// 	var opacity_perc = scroll2/picY;
+		// 	// console.log(scroll2+" / "+picY+" = "+opacity_perc);
+		// 	$("#about aside.pic img").css("opacity",opacity_perc);
+		// });
 
 		// $("#logos").bxSlider({
 		// 	minSlides: 4,
@@ -141,14 +141,6 @@ var $j = jQuery.noConflict();
 		// });
 		// var box = $('#box').data("plugin_tinycarousel");
 		// console.log(box);
-
-		var home_url = "<?php echo esc_url( home_url( '/' ) ); ?>";
-		console.log("home_url = "+home_url);
-		if($("body").hasClass("home") === false){
-			$("#menu-item-5 a").attr("href", home_url+"#about");
-			$("#menu-item-7 a").attr("href", home_url+"#services");
-			$("#menu-item-8 a").addClass("open-modal");
-		}
 
 	});
 </script>
@@ -179,10 +171,22 @@ var $j = jQuery.noConflict();
 			endif; ?>
 		</div><!-- .site-branding -->
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button>
-			<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'primary-menu' ) ); ?>
-		</nav><!-- #site-navigation -->
+		<?php if ( is_front_page() ) : ?>
+
+			<nav id="site-navigation" class="main-navigation home" role="navigation">
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button>
+				<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'primary-menu' ) ); ?>
+			</nav><!-- #site-navigation -->
+
+		<?php else : ?>
+
+			<nav id="site-navigation" class="main-navigation not-home" role="navigation">
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button>
+				<?php wp_nav_menu( array( 'menu_id' => '27')) ?>
+			</nav><!-- #site-navigation -->
+
+		<?php endif; ?>
+
 	</header><!-- #masthead -->
 
 	<div id="content" class="site-content">

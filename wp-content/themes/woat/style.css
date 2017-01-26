@@ -1072,21 +1072,21 @@ h1, h2, h3, h4, h5, h6 {
 	bottom: 15vh;
 }
 
-ul#primary-menu {
+#site-navigation ul {
 	text-align: center;
 }
 
-ul#primary-menu li {
+#site-navigation ul li {
 	display: inline-block;
 	float: none;
 }
 
-ul#primary-menu li a {
+#site-navigation ul li a {
 	padding: 0 25px;
 	color: white;
 }
 
-ul#primary-menu li a:after {
+#site-navigation ul li a:after {
 	height: 4px;
 	width: 50%;
 	display: block;
@@ -1094,7 +1094,7 @@ ul#primary-menu li a:after {
 	content: "";
 }
 
-ul#primary-menu li a:hover:after {
+#site-navigation ul li a:hover:after {
 	background-color: white;
 }
 
@@ -2137,7 +2137,7 @@ ul#primary-menu li a:hover:after {
 # Blog main
 --------------------------------------------------------------*/
 
-body.blog #menu-item-68 a:after {
+body.blog #menu-item-117 a:after {
 	background-color: white;
 }
 
@@ -2731,17 +2731,19 @@ body.single #comments {
 
 }
 
+
+
 /*--------------------------------------------------------------
 # Portfolio archive
 --------------------------------------------------------------*/
 
 
 
-body.page-id-11 #menu-item-13 a:after {
+body.post-type-archive #menu-item-118 a:after {
 	background-color: white;
 }
 
-body.page-id-11 #menu {
+body.post-type-archive #menu {
 	position: absolute;
 	top: 20px;
 }
@@ -2790,12 +2792,17 @@ body.page-id-11 #menu {
 #portfolio_intro a {
 	color: white;
 }
+body.archive #primary article .post-content {
+	width: 100%;
+	padding-left: 0;
+	margin-left: 0;
+}
 
-body.page-id-11 #primary article h2 {
+body.post-type-archive #primary article h2 {
 	margin: 0 0 20px 0;
 }
 
-body.page-id-11 #primary article h2 a {
+body.post-type-archive #primary article h2 a {
 	font-family: Montserrat, sans-serif;
 	font-weight: bold;
 	font-size: 1.5em;
@@ -2803,33 +2810,34 @@ body.page-id-11 #primary article h2 a {
 	color: #3ACCA7;
 }
 
-body.page-id-11 #primary article h2 .co {
+body.post-type-archive #primary article h2 .co {
 	color: #5222b3;
 }
 
-body.page-id-11 #primary article {
+body.post-type-archive #primary article {
 	font-family: Lato, sans-serif;
 	/*color: #5222b3;*/
 	font-size: 1em;
 	line-height: 1.5em;
+	margin-bottom: 35px;
 }
 
-body.page-id-11 #primary article .meta {
+body.post-type-archive #primary article .meta {
 	color: #5222b3;
 	font-size: 0.9em;
 	text-transform: uppercase;
 }
 
-body.page-id-11 #primary article .meta .sep {
+body.post-type-archive #primary article .meta .sep {
 	margin: 0 5px;
 	padding: 0 5px;
 }
 
-body.page-id-11 #primary article .entry-content {
+body.post-type-archive #primary article .entry-content {
 	margin: 0;
 }
 
-body.page-id-11 #primary article p {
+body.post-type-archive #primary article p {
 	margin-bottom: 0;
 }
 
@@ -2846,8 +2854,95 @@ body.page-id-11 #primary article p {
 		border: 0;
 	}
 
-	body.page-id-11 #primary article h2 a {
+	body.post-type-archive #primary article h2 a {
 		line-height: 1.2em;
 	}
 
+}
+
+
+/*--------------------------------------------------------------
+# Portfolio single
+--------------------------------------------------------------*/
+
+body.single-portfolio #masthead .logo {
+	display: none;
+}
+
+body.single-portfolio section.intro {
+	font-family: Lato, sans-serif;
+	font-weight: 300;
+	font-size: 1em;
+	line-height: 1.5em;
+	padding: 70px 100px;
+	color: white;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3ac9a8+0,6d28c4+100 */
+	background: #3ac9a8; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #3ac9a8 0%, #6d28c4 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg,  #3ac9a8 0%,#6d28c4 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg,  #3ac9a8 0%,#6d28c4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3ac9a8', endColorstr='#6d28c4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+body.single-portfolio section.intro > div {
+	padding: 70px;
+	border: 2px solid white;
+	border-radius: 5px;
+	max-width: 1372px;
+	margin: 0 auto;
+}
+
+body.single-portfolio section.intro h1 {
+	font-family: Montserrat, sans-serif;
+	font-weight: bold;
+	font-size: 2em;
+	text-transform: uppercase;
+	margin: 0;
+}
+
+body.single-portfolio section.intro h2 {
+	font-family: Lato, sans-serif;
+	font-size: 1.5em;
+	line-height: 2em;
+	/*text-transform: uppercase;*/
+	margin-top: 0;
+}
+
+body.single-portfolio section.intro .meta {
+	margin-bottom: 30px;
+}
+
+body.single-portfolio section.intro .meta div {
+	display: inline-block;
+	width: 14vw;
+}
+
+body.single-portfolio section.intro .meta div span.label {
+	display: block;
+	text-transform: uppercase;
+}
+
+body.single-portfolio section.intro p {
+	margin-bottom: 0;
+}
+
+body.single-portfolio .entry-content {
+}
+
+body.single-portfolio #primary article {
+	padding: 70px 100px;
+}
+
+body.single-portfolio .entry-content {
+	padding: 30px;
+	border-style: solid;
+	border-width: 2px;
+	-moz-border-image: url("assets/grad-border.png") 2 stretch;
+	-webkit-border-image: url("assets/grad-border.png") 2 stretch;
+	-o-border-image: url("assets/grad-border.png") 2 stretch;
+	border-image: url("assets/grad-border.png") 2 fill stretch;
+}
+
+body.single-portfolio div.pdfemb-viewer {
+	border: 0;
 }
