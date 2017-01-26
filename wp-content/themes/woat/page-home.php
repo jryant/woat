@@ -142,7 +142,7 @@ get_header(); ?>
 					</aside>
 					<article>
 						<header>
-							The Blog
+							<a href="<?php echo site_url('/blog/'); ?>">The Blog</a>
 						</header>
 						<?php
 							$the_query = new WP_Query( array( 'page_id' => 51 ) );
@@ -166,15 +166,11 @@ get_header(); ?>
 
 			<section id="tests">
 				<div>
+
 					<div class="slider">
-						<!-- <a class="buttons prev" href="#">&#60;</a> -->
-						<div class="viewport">
-							<ul id="logos">
-								<?php	display_logos(); ?>
-							</ul>
-						</div>
-						<!-- <a class="buttons next" href="#">&#62;</a> -->
+						<div class="logos"></div>
 					</div>
+
 					<div class="contain">
 						<div id="monies">
 						<?php
@@ -232,7 +228,8 @@ get_header(); ?>
 						wp_reset_postdata();
 						?>
 					</header>
-					<form>
+					<?php echo do_shortcode("[ninja_form id=1]") ?>
+					<!-- <form>
 						<label for="contact_Name">Name</label>
 						<input type="text" name="contact_name" placeholder="Name">
 						<label for="contact_Email">Email address</label>
@@ -242,7 +239,7 @@ get_header(); ?>
 						<label for="contact_captcha" class="green">How many letters in the word "Whale"?</label>
 						<input type="text" name="contact_captcha" class="green">
 						<span class="submit">Submit</span>
-					</form>
+					</form> -->
 				</div>
 			</section>
 

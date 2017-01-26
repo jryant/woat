@@ -10,9 +10,9 @@
 ?>
 
 <?php echo '<div class="featured">'.get_the_post_thumbnail()."</div>"; ?>
-
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<div>
+	<?php echo '<div class="featured"><a href="'.esc_url(get_permalink()).'" rel="bookmark">'.get_the_post_thumbnail()."</a></div>"; ?>
+	<div class="post-content">
 		<header class="entry-header">
 
 			<?php

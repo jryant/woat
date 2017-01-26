@@ -23,6 +23,33 @@
 		</form>
 	</div>
 
+	<section id="contact" style="display:none;">
+		<div>
+			<header>
+				<?php
+				$args = array( 'page_id' => 66 );
+				$loop = new WP_Query( $args );
+				while ( $loop->have_posts() ) : $loop->the_post();
+					echo wpautop(get_the_content());
+				endwhile;
+				wp_reset_postdata();
+				?>
+			</header>
+			<?php echo do_shortcode("[ninja_form id=1]") ?>
+			<!-- <form>
+				<label for="contact_Name">Name</label>
+				<input type="text" name="contact_name" placeholder="Name">
+				<label for="contact_Email">Email address</label>
+				<input type="text" name="contact_email" placeholder="Email">
+				<label for="contact_body">Message</label>
+				<textarea name="contact_body" rows="8" cols="80"></textarea>
+				<label for="contact_captcha" class="green">How many letters in the word "Whale"?</label>
+				<input type="text" name="contact_captcha" class="green">
+				<span class="submit">Submit</span>
+			</form> -->
+		</div>
+	</section>
+
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info">
 			Whale Of A Tale Content &copy; <?php echo date('Y'); ?>

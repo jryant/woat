@@ -12,7 +12,36 @@
  * @package WOAT
  */
 
-get_header(); ?>
+get_header();
+get_menu();
+?>
+
+<section id="blog_intro">
+	<div>
+		<?php
+			$the_query = new WP_Query( array( 'page_id' => 51 ) );
+			if ( $the_query->have_posts() ) {
+					while ( $the_query->have_posts() ) {
+							$the_query->the_post();
+					}
+			} else { }
+
+		echo wpautop(get_the_content());
+		wp_reset_postdata(); ?>
+		<div class="categories">
+			<h2>Topics</h2>
+			<ul>
+				<?php echo wp_list_categories( array(
+					'title_li' => '',
+					'hide_empty' => 0,
+					// 'order' => 'ASC',
+					'orderby' => 'slug',
+					'exclude' => '1'
+				)); ?>
+			</ul>
+		</div>
+	</div>
+</section>
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">

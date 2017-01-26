@@ -12,16 +12,7 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
-			<div id="menu">
-				<ul class="sm">
-					<li class="menu"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="fb extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li	class="tw extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="ig extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="li extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="sub extra"><a href="#subscribe" class="open-modal"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-				</ul>
-			</div>
+		<?php echo get_menu(); ?>
 
 		<?php
 		while ( have_posts() ) : the_post();
@@ -54,8 +45,20 @@ get_header(); ?>
 					<aside>
 						<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/kyla-comment-pic.png">
 					</aside>
-					<h1>A note from the author</h1>
-					<p>If you are a jerk in the comments I will delete you.</p>
+					<!-- <p>If you are a jerk in the comments I will delete you.</p> -->
+					<?php
+						$the_query = new WP_Query( array( 'page_id' => 93 ) );
+						if ( $the_query->have_posts() ) {
+								while ( $the_query->have_posts() ) {
+										$the_query->the_post();
+								}
+						} else { }
+
+						echo '<h1>'.get_the_title().'</h1>';
+						echo wpautop(get_the_content());
+						wp_reset_postdata();
+					?>
+
 				</div><!-- .bio -->
 
 			</div></section>

@@ -208,21 +208,18 @@ $mysqlDumpFound = ($mysqlDumpPath) ? true : false;
 
                         <label><?php _e("Add Custom Path:", 'duplicator'); ?></label><br/>
                         <input type="text" name="package_mysqldump_path" id="package_mysqldump_path" value="<?php echo $package_mysqldump_path; ?> " />
-                        <p class="description">
-                            <?php
-                            _e("This is the path to your mysqldump program.", 'duplicator');
-                            ?>
-                        </p>
+                        <p class="description"><?php _e("This is the path to your mysqldump program.", 'duplicator'); ?></p>
                     </div>
 
                 <?php endif; ?>
             </td>
         </tr>	
         <tr>
-            <th scope="row"><label><?php _e("Package Debug", 'duplicator'); ?></label></th>
+            <th scope="row"><label><?php _e("Debugging", 'duplicator'); ?></label></th>
             <td>
                 <input type="checkbox" name="package_debug" id="package_debug" <?php echo ($package_debug) ? 'checked="checked"' : ''; ?> />
-                <label for="package_debug"><?php _e("Show Package Debug Status in Packages Screen", 'duplicator'); ?></label>
+                <label for="package_debug"><?php _e("Enable debug options throughout user interface", 'duplicator'); ?></label>
+				<p class="description"><?php  _e("Refresh page after saving to show/hide Debug menu", 'duplicator'); ?></p>
             </td>
         </tr>	
 
