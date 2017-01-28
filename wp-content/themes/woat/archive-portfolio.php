@@ -14,7 +14,14 @@
 
 get_header();
 get_menu();
-?>
+
+if(!is_user_logged_in()):
+	// echo "<h1>NOT logged in</h1>";
+
+	portfolio_access();
+
+else: ?>
+	<!-- // echo "<h1>logged in</h1>"; -->
 
 <section id="portfolio_intro">
 	<div>
@@ -70,6 +77,8 @@ get_menu();
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
+
+<?php endif; ?>
 
 <?php
 get_sidebar();

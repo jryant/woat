@@ -379,7 +379,7 @@ add_action( 'init', 'add_custom_taxonomies', 0 );
 
 
 // Return an alternate title, without prefix, for every type used in the get_the_archive_title().
-add_filter('get_the_archive_title', function ($title) {
+add_filter('get_the_archive_title', function($title) {
     if ( is_category() ) {
         $title = single_cat_title( 'Topic: ', false );
     } elseif ( is_tag() ) {
@@ -440,3 +440,62 @@ function get_menu(){
 			</div>
 	';
 }
+
+
+
+function portfolio_access(){
+	$the_query = new WP_Query( array( 'page_id' => 100 ) );
+	if ( $the_query->have_posts() ) {
+			while ( $the_query->have_posts() ) {
+					$the_query->the_post();
+			}
+	} else { }
+	$port_access_heading = "<h1>".get_the_title()."</h1>";
+	$port_access = wpautop(get_the_content());
+	wp_reset_postdata();
+
+	$return = '
+		<section id="port_access">
+			<div>
+				'.$port_access_heading.'
+				<div class="right">
+					<h2>Log In</h2>
+						'.wp_login_form( array(
+							'remember'       => false,
+							'value_username' => 'portfolio_access',
+							'echo'					 => false,
+							'label_log_in'   => __( 'Enter' ),
+							// 'redirect'			 => 'site_url( '/mypage/ ' )'
+						)).'
+				</div>
+				<div class="left">
+					'.$port_access.'
+				</div>
+			</div>
+		</section>';
+
+	echo $return;
+}
+
+/**
+ * Disable admin bar on the frontend of your website
+ * for subscribers.
+ */
+function themeblvd_disable_admin_bar() {
+    if ( ! current_user_can('edit_posts') ) {
+        add_filter('show_admin_bar', '__return_false');
+    }
+}
+add_action( 'after_setup_theme', 'themeblvd_disable_admin_bar' );
+
+/**
+ * Redirect back to homepage and not allow access to
+ * WP admin for Subscribers.
+ */
+function themeblvd_redirect_admin(){
+    if ( ! defined('DOING_AJAX') && ! current_user_can('edit_posts') ) {
+        wp_redirect( site_url() );
+        exit;
+    }
+}
+add_action( 'admin_init', 'themeblvd_redirect_admin' );

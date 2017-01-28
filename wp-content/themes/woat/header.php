@@ -9,12 +9,37 @@
  * @package WOAT
  */
 
+$redirect = null;
+
+if (strpos($_SERVER['REQUEST_URI'], 'portfolio') !== FALSE && !is_user_logged_in() && $_SERVER['REQUEST_URI'] !== site_url('/portfolio/') ){
+	// echo $_SERVER['REQUEST_URI']."
+	// ";
+	// echo '<h1>not allowed</h1>';
+	// $request_url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+	// $port_url = site_url('/portfolio/?r=123123');
+	// echo $port_url;
+	// header("Location: $port_url");
+	// header("Location: http://localhost:8888/else/woat/portfolio/");
+ // 	die();
+
+	// $redirect = '<meta http-equiv="refresh" content="0; url='.$port_url.'" />';
+
+} elseif (strpos($_SERVER['REQUEST_URI'], 'portfolio') !== FALSE && is_user_logged_in()) {
+	// echo $_SERVER['REQUEST_URI']."
+	// ";
+ // 	echo '<h1>ALLOWED</h1>';
+ // 	die();
+}
+
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="profile" href="http://gmpg.org/xfn/11">
+
+<?php // echo $redirect; ?>
+<?php // if($redirect !== null): die(); endif; ?>
 
 <?php wp_enqueue_script("jquery"); ?>
 
