@@ -16,6 +16,7 @@ $_POST['cache_wp']			= (isset($_POST['cache_wp']))   ? true : false;
 $_POST['cache_path']		= (isset($_POST['cache_path'])) ? true : false;
 $_POST['package_name']		= isset($_POST['package_name']) ? $_POST['package_name'] : null;
 $_POST['zip_manual']		= (isset($_POST['zip_manual']) && $_POST['zip_manual'] == '1') ? true : false;
+$_POST['zip_filetime']		= (isset($_POST['zip_filetime'])) ? $_POST['zip_filetime'] : 'current';
 
 //LOGGING
 $POST_LOG = $_POST;
@@ -52,7 +53,7 @@ if (isset($_GET['dbtest']))
 	$tstSrv   = ($dbConn)  ? "<div class='dup-pass'>Success</div>" : "<div class='dup-fail'>Fail</div>";
 	$tstDB    = ($dbFound) ? "<div class='dup-pass'>Success</div>" : "<div class='dup-fail'>Fail</div>";
 	
-	$dbvar_version = DUPX_Util::mysql_version($dbConn);
+	$dbvar_version = DUPX_Util::mysqldb_version($dbConn);
 	$dbvar_version = ($dbvar_version == 0) ? 'no connection' : $dbvar_version;
 	$dbvar_version_fail = version_compare($dbvar_version, $GLOBALS['FW_VERSION_DB']) < 0;
 	$tstCompat = ($dbvar_version_fail)
@@ -159,6 +160,7 @@ DUPX_Log::Info('NOTICE: Do NOT post to public sites or forums');
 DUPX_Log::Info("********************************************************************************");
 DUPX_Log::Info("VERSION:\t{$GLOBALS['FW_DUPLICATOR_VERSION']}");
 DUPX_Log::Info("PHP:\t\t" . phpversion() . ' | SAPI: ' . php_sapi_name());
+DUPX_Log::Info("PHP MEMORY:\t" . $GLOBALS['PHP_MEMORY_LIMIT'] . ' | SUHOSIN: ' . $GLOBALS['PHP_SUHOSIN_ON'] );
 DUPX_Log::Info("SERVER:\t\t{$_SERVER['SERVER_SOFTWARE']}");
 DUPX_Log::Info("DOC ROOT:\t{$root_path}");
 DUPX_Log::Info("DOC ROOT 755:\t" . var_export($GLOBALS['CHOWN_ROOT_PATH'], true));
@@ -186,9 +188,12 @@ DUPX_Log::Info($log);
 
 $zip_start = DUPX_Util::get_microtime();
 
-if ($_POST['zip_manual']) {
+if ($_POST['zip_manual']) 
+{
 	DUPX_Log::Info("\n** PACKAGE EXTRACTION IS IN MANUAL MODE ** \n");
-} else {
+} 
+else 
+{
 	if ($GLOBALS['FW_PACKAGE_NAME'] != $_POST['package_name']) {
 		$log  = "\n--------------------------------------\n";
 		$log .= "WARNING: This package set may be incompatible!  \nBelow is a summary of the package this installer was built with and the package used. \n";
@@ -205,12 +210,28 @@ if ($_POST['zip_manual']) {
 
 	$target = $root_path;
 	$zip = new ZipArchive();
-	if ($zip->open($_POST['package_name']) === TRUE) {
-		DUPX_Log::Info("EXTRACTING");
+	if ($zip->open($_POST['package_name']) === TRUE) 
+	{
+		DUPX_Log::Info("\nEXTRACTING");
 		if (! $zip->extractTo($target)) {
 			DUPX_Log::Error(ERR_ZIPEXTRACTION);
 		}
 		$log  = print_r($zip, true);
+		
+		//Keep original timestamp on the file
+		if ($_POST['zip_filetime'] == 'original') 
+		{
+			$log .=  "File timestamp set to Original\n"; 
+			for ($idx = 0; $s = $zip->statIndex($idx); $idx++) {
+				touch( $target . DIRECTORY_SEPARATOR . $s['name'], $s['mtime'] );
+			}
+		} 
+		else
+		{
+			$now = date("Y-m-d H:i:s");
+			$log .=  "File timestamp set to Current: {$now}\n"; 
+		}
+		
 		$close_response = $zip->close();
 		$log .= "COMPLETE: " . var_export($close_response, true);
 		DUPX_Log::Info($log);
@@ -222,6 +243,7 @@ if ($_POST['zip_manual']) {
 
 
 //CONFIG FILE RESETS
+$log = '';
 DUPX_WPConfig::UpdateStep1();
 DUPX_ServerConfig::Reset();
 
@@ -229,22 +251,42 @@ DUPX_ServerConfig::Reset();
 //====================================================================================================
 //DATABASE ROUTINES
 //====================================================================================================
-@chmod("{$root_path}/database.sql", 0777);
-if (filesize("{$root_path}/database.sql") > 100000000) {
-	DUPX_Log::Info("\nWARNING: Database Script is larger than 100MB this may lead to PHP memory allocation issues on some budget hosts.");
-}
+$faq_url = $GLOBALS['FAQ_URL'];
+$db_file_size = filesize('database.sql');
+$php_mem = $GLOBALS['PHP_MEMORY_LIMIT'];
+$php_mem_range = DUPX_Util::return_bytes($GLOBALS['PHP_MEMORY_LIMIT']);
+$php_mem_range = $php_mem_range == null ?  0 : $php_mem_range - 5000000; //5 MB Buffer
 
-$sql_file = file_get_contents('database.sql', true);
-if ($sql_file == false || strlen($sql_file) < 10) 
+//Fatal Memory errors from file_get_contents is not catchable.  
+//Try to warn ahead of time with a buffer in memory difference
+if ($db_file_size >= $php_mem_range  && $php_mem_range != 0) 
 {
-	$sql_file = file_get_contents($GLOBALS['SQL_FILE_NAME'], true);
-	if ($sql_file == false || strlen($sql_file) < 10) {
-		DUPX_Log::Info("ERROR: Unable to read from the extracted database.sql file .\nValidate the permissions and/or group-owner rights on directory '{$root_path}'\n");
-	}
+	$db_file_size = DUPX_Util::readable_bytesize($db_file_size);
+	$msg = "\nWARNING: The database script is '{$db_file_size}' in size.  The PHP memory allocation is set\n";
+	$msg .= "at '{$php_mem}'.  There is a high possibility that the installer script will fail with\n";
+	$msg .= "a memory allocation error when trying to load the database.sql file.  It is\n";
+	$msg .= "recommended to increase the 'memory_limit' setting in the php.ini config file.\n";
+	$msg .= "see: {$faq_url}#faq-trouble-056-q \n";
+	DUPX_Log::Info($msg);
 }
 
-//Complex Subject See: http://webcollab.sourceforge.net/unicode.html
+@chmod("{$root_path}/database.sql", 0777);
+$sql_file = file_get_contents('database.sql', true);
+
+//ERROR: Reading database.sql file
+if ($sql_file === FALSE || strlen($sql_file) < 10) 
+{
+	$msg = "<b>Unable to read the database.sql file from the archive.  Please check these items:</b> <br/>";
+	$msg .= "1. Validate permissions and/or group-owner rights on these items: <br/>";
+	$msg .= " - File: database.sql <br/> - Directory: [{$root_path}] <br/>";
+	$msg .= "<i>see: <a href='{$faq_url}#faq-trouble-055-q' target='_blank'>{$faq_url}#faq-trouble-055-q</a></i> <br/>";
+	$msg .= "2. Validate the database.sql file exists and is in the root of the archive.zip file <br/>";
+	$msg .= "<i>see: <a href='{$faq_url}#faq-installer-020-q' target='_blank'>{$faq_url}#faq-installer-020-q</a></i> <br/>";
+	DUPX_Log::Error($msg);
+}
+
 //Removes invalid space characters
+//Complex Subject See: http://webcollab.sourceforge.net/unicode.html
 if ($_POST['dbnbsp']) 
 {
 	DUPX_Log::Info("NOTICE: Ran fix non-breaking space characters\n");
@@ -252,34 +294,37 @@ if ($_POST['dbnbsp'])
 }
 
 //Write new contents to install-data.sql
-file_put_contents($GLOBALS['SQL_FILE_NAME'], $sql_file);
-
+$sql_file_copy_status   = file_put_contents($GLOBALS['SQL_FILE_NAME'], $sql_file);
 $sql_result_file_data	= explode(";\n", $sql_file);
 $sql_result_file_length = count($sql_result_file_data);
 $sql_result_file_path	= "{$root_path}/{$GLOBALS['SQL_FILE_NAME']}";
-@chmod($sql_result_file_path, 0777);
 $sql_file = null;
 
-if (!is_readable($sql_result_file_path) || filesize($sql_result_file_path) == 0) {
-	DUPX_Log::Info("ERROR: Unable to create new sql file {$GLOBALS['SQL_FILE_NAME']}.\nValidate the permissions and/or group-owner rights on directory '{$root_path}' and file '{$GLOBALS['SQL_FILE_NAME']}'\n");
+//WARNING: Create installer-data.sql failed
+if ($sql_file_copy_status === FALSE || filesize($sql_result_file_path) == 0 || !is_readable($sql_result_file_path)) 
+{
+	$sql_file_size = DUPX_Util::readable_bytesize(filesize('database.sql'));
+	$msg  = "\nWARNING: Unable to properly copy database.sql ({$sql_file_size}) to {$GLOBALS['SQL_FILE_NAME']}.  Please check these items:\n";
+	$msg .= "- Validate permissions and/or group-owner rights on database.sql and directory [{$root_path}] \n";
+	$msg .= "- see: {$faq_url}#faq-trouble-055-q \n";
+	DUPX_Log::Info($msg);
 }
 
 DUPX_Log::Info("\nUPDATED FILES:");
 DUPX_Log::Info("- SQL FILE:  '{$sql_result_file_path}'");
 DUPX_Log::Info("- WP-CONFIG: '{$root_path}/wp-config.php' (if present)");
-$zip_end = DUPX_Util::get_microtime();
-DUPX_Log::Info("\nARCHIVE RUNTIME: " . DUPX_Util::elapsed_time($zip_end, $zip_start));
-DUPX_Log::Info("\n");
+DUPX_Log::Info("\nARCHIVE RUNTIME: " . DUPX_Util::elapsed_time(DUPX_Util::get_microtime(), $zip_start) . "\n");
 DUPX_Util::fcgi_flush();
 
 //=================================
 //START DB RUN
 @mysqli_query($dbh, "SET wait_timeout = {$GLOBALS['DB_MAX_TIME']}");
 @mysqli_query($dbh, "SET max_allowed_packet = {$GLOBALS['DB_MAX_PACKETS']}");
-DUPX_Util::mysql_set_charset($dbh, $_POST['dbcharset'], $_POST['dbcollate']);
+DUPX_Util::mysqldb_set_charset($dbh, $_POST['dbcharset'], $_POST['dbcollate']);
 
 //Will set mode to null only for this db handle session
 //sql_mode can cause db create issues on some systems
+$qry_session_custom = true;
 switch ($_POST['dbmysqlmode']) {
     case 'DISABLE':
         @mysqli_query($dbh, "SET SESSION sql_mode = ''");
@@ -297,13 +342,16 @@ switch ($_POST['dbmysqlmode']) {
 }
 
 //Set defaults in-case the variable could not be read
-$dbvar_maxtime		= DUPX_Util::mysql_variable_value($dbh, 'wait_timeout');
-$dbvar_maxpacks		= DUPX_Util::mysql_variable_value($dbh, 'max_allowed_packet');
-$dbvar_sqlmode		= DUPX_Util::mysql_variable_value($dbh, 'sql_mode');
+$dbvar_maxtime		= DUPX_Util::mysqldb_variable_value($dbh, 'wait_timeout');
+$dbvar_maxpacks		= DUPX_Util::mysqldb_variable_value($dbh, 'max_allowed_packet');
+$dbvar_sqlmode		= DUPX_Util::mysqldb_variable_value($dbh, 'sql_mode');
 $dbvar_maxtime		= is_null($dbvar_maxtime) ? 300 : $dbvar_maxtime;
 $dbvar_maxpacks		= is_null($dbvar_maxpacks) ? 1048576 : $dbvar_maxpacks;
 $dbvar_sqlmode		= empty($dbvar_sqlmode) ? 'NOT_SET'  : $dbvar_sqlmode;
-$dbvar_version		= DUPX_Util::mysql_version($dbh);
+$dbvar_version		= DUPX_Util::mysqldb_version($dbh);
+$sql_file_size1		= DUPX_Util::readable_bytesize(@filesize("database.sql"));
+$sql_file_size2		= DUPX_Util::readable_bytesize(@filesize("{$GLOBALS['SQL_FILE_NAME']}"));
+
 
 DUPX_Log::Info("{$GLOBALS['SEPERATOR1']}");
 DUPX_Log::Info('DATABASE-ROUTINES');
@@ -312,6 +360,7 @@ DUPX_Log::Info("--------------------------------------");
 DUPX_Log::Info("SERVER ENVIRONMENT");
 DUPX_Log::Info("--------------------------------------");
 DUPX_Log::Info("MYSQL VERSION:\tThis Server: {$dbvar_version} -- Build Server: {$GLOBALS['FW_VERSION_DB']}");
+DUPX_Log::Info("FILE SIZE:\tdatabase.sql ({$sql_file_size1}) - installer-data.sql ({$sql_file_size2})");
 DUPX_Log::Info("TIMEOUT:\t{$dbvar_maxtime}");
 DUPX_Log::Info("MAXPACK:\t{$dbvar_maxpacks}");
 DUPX_Log::Info("SQLMODE:\t{$dbvar_sqlmode}");
@@ -380,7 +429,7 @@ while ($counter < $sql_result_file_length) {
 				$dbh = DUPX_Util::db_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname'], $_POST['dbport'] );
 				// Reset session setup
 				@mysqli_query($dbh, "SET wait_timeout = {$GLOBALS['DB_MAX_TIME']}");
-				DUPX_Util::mysql_set_charset($dbh, $_POST['dbcharset'], $_POST['dbcollate']);
+				DUPX_Util::mysqldb_set_charset($dbh, $_POST['dbcharset'], $_POST['dbcollate']);
 			}
 			DUPX_Log::Info("**ERROR** database error write '{$err}' - [sql=" . substr($sql_result_file_data[$counter], 0, 75) . "...]");
 			$dbquery_errs++;
@@ -415,8 +464,8 @@ if ($result = mysqli_query($dbh, "SHOW TABLES")) {
 }
 
 if ($dbtable_count == 0) {
-	DUPX_Log::Error("No tables where created during step 1 of the install.  Please review the installer-log.txt file for sql error messages.
-		You may have to manually run the installer-data.sql with a tool like phpmyadmin to validate the data input.  If you have enabled compatibility mode
+	DUPX_Log::Error("No tables where created during step 1 of the install.  Please review the <a href='installer-log.txt' target='_blank'>installer-log.txt</a> file for  
+		ERROR messages.  You may have to manually run the installer-data.sql with a tool like phpmyadmin to validate the data input.  If you have enabled compatibility mode
 		during the package creation process then the database server version your using may not be compatible with this script.\n");
 }
 

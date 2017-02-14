@@ -4,7 +4,7 @@ Donate link: www.lifeinthegrid.com/partner
 Tags: backup, restore, move, migrate, localhost, synchronize, duplicate, clone, automate, niche site 
 Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 1.1.28
+Stable tag: 1.1.30
 License: GPLv2
 
 Duplicate, clone, backup, move and transfer an entire site from one location to another. 
@@ -83,7 +83,7 @@ Yes.  Please see the [video section](https://snapcreek.com/duplicator/docs/faqs-
 
 = Is this plugin compatible with WordPress Multi-Site (MU)? =
 
-No.  However the Pro version can duplicate entire Multisite networks.
+No.  However the Pro version does have minor support for MU
 
 = Where can I get more help and support for this plugin? =
 
