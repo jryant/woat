@@ -88,7 +88,8 @@ endif; ?>
 					// 	wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', 'woat' ), array( 'span' => array( 'class' => array() ) ) ),
 					// 	the_title( '<span class="screen-reader-text">"', '"</span>', false )
 					// ) );
-					the_excerpt();
+					$excerpt = get_the_excerpt().'&hellip; <a class="read-more" href="'. get_permalink( get_the_ID() ) . '">' . __('Continue Reading &rarr;', 'woat') . '</a>';
+					echo '<p>'.$excerpt.'</p>';
 				endif;
 
 				wp_link_pages( array(

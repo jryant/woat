@@ -199,6 +199,7 @@ function my_new_default_post_type() {
         'rewrite' => array( 'slug' => 'blog' ),
         'query_var' => false,
         'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'post-formats' ),
+				'menu_position'       => 22,
     ) );
 }
 
@@ -250,12 +251,13 @@ function cpt_testimonials() {
 		'show_in_menu'        => true,
 		'show_in_nav_menus'   => false,
 		'show_in_admin_bar'   => true,
-		'menu_position'       => 5,
+		'menu_position'       => 25,
 		'can_export'          => true,
 		'has_archive'         => false,
 		'exclude_from_search' => true,
 		'publicly_queryable'  => false,
 		'capability_type'     => 'post',
+		'menu_icon'						=> 'dashicons-editor-quote',
 	);
 
 	register_post_type( 'testimonials', $args );
@@ -308,6 +310,7 @@ function cpt_portfolio() {
 		'exclude_from_search' => true,
 		'publicly_queryable'  => true,
 		'capability_type'     => 'post',
+    'menu_icon'   				=> 'dashicons-portfolio',
 	);
 
 	register_post_type( 'portfolio', $args );
@@ -499,3 +502,44 @@ function themeblvd_redirect_admin(){
     }
 }
 add_action( 'admin_init', 'themeblvd_redirect_admin' );
+
+
+/**
+ * Customize admin dashboard
+ */
+ function load_custom_wp_admin_mods() {
+         wp_register_script( 'custom_wp_admin_js', get_template_directory_uri() . '/js/admin.js', false, '1.0.0' );
+         wp_enqueue_script( 'custom_wp_admin_js' );
+
+				 wp_register_style( 'custom_wp_admin_css', get_template_directory_uri() . '/css/admin.css', false, '1.0.0' );
+				 wp_enqueue_style( 'custom_wp_admin_css' );
+ }
+ add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_mods' );
+
+
+/**
+ * Customize admin menu order
+ */
+function custom_menu_order($menu_ord) {
+    if (!$menu_ord) return true;
+    return array(
+			'index.php', // this represents the dashboard link
+			'edit.php?post_type=page', //the posts tab
+			'edit.php', //the posts tab
+			'edit-comments.php', //the posts tab
+			'edit.php?post_type=portfolio', //the posts tab
+			'edit.php?post_type=testimonials', //the posts tab
+			'upload.php', // the media manager
+ );
+}
+add_filter('custom_menu_order', 'custom_menu_order');
+add_filter('menu_order', 'custom_menu_order');
+
+
+function new_excerpt_more( $more ) {
+	return '&hellip; <a class="read-more" href="'. get_permalink( get_the_ID() ) . '">' . __('Continue Reading &rarr;', 'woat') . '</a>';
+}
+// add_filter( 'excerpt_more', 'new_excerpt_more' );
+
+
+add_shortcode('wpbsearch', 'get_search_form');

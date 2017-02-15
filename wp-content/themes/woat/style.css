@@ -2166,12 +2166,14 @@ body.blog #menu {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d8fb2', endColorstr='#6d28c4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-#blog_intro {
+#blog_intro,
+body.error404 #main {
 	font-family: Lato, sans-serif;
 	padding: 70px 100px;
 }
 
-#blog_intro > div{
+#blog_intro > div,
+body.error404 #main {
 	padding: 40px 120px;
 	border: 2px solid white;
 	border-radius: 5px;
@@ -2190,7 +2192,8 @@ body.blog #menu {
 }
 
 #blog_intro h1,
-#search-term h1 {
+#search-term h1,
+body.error404 h1 {
 	font-family: Montserrat, sans-serif;
 	font-weight: bold;
 	font-size: 2em;
@@ -2202,19 +2205,22 @@ body.blog #menu {
 	color: white;
 }
 
-#blog_intro .categories ul {
+#blog_intro .categories ul,
+body.error404 .categories ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 }
 
-#blog_intro .categories ul li {
+#blog_intro .categories ul li,
+body.error404 .categories ul li {
 	width: 32%;
 	/*border: 1px solid white;*/
 	display: inline-block;
 }
 
-#blog_intro .categories ul li a {
+#blog_intro .categories ul li a,
+body.error404 .categories ul li a {
 	text-decoration: none;
 	line-height: 2em;
 	display: inline-block;
@@ -2222,13 +2228,15 @@ body.blog #menu {
 	height: 1.5em;
 }
 
-#blog_intro .categories ul li a:hover {
+#blog_intro .categories ul li a:hover,
+body.error404 .categories ul li a:hover {
 	font-weight: bold;
 }
 
 body.blog #primary,
 body.archive #primary,
-body.page-id-11 #primary {
+body.page-id-11 #primary,
+body.error404 #primary {
 	padding: 70px 100px;
 	max-width: 1572px;
 	margin: 0 auto;
@@ -2242,7 +2250,8 @@ body.page-id-11 #primary .featured {
 
 body.blog #primary article,
 body.archive #primary article,
-body.page-id-11 #primary article {
+body.page-id-11 #primary article,
+body.error404 #main {
 	border-style: solid;
 	border-width: 2px;
 	-moz-border-image: url("assets/grad-border.png") 2 stretch;
@@ -2274,7 +2283,8 @@ body.archive #primary article .post-content {
 
 body.blog #primary article h2 a,
 body.archive #primary article h2 a,
-body.page-id-11 #primary article h2 a {
+body.page-id-11 #primary article h2 a,
+body.error404 #primary h2 {
 	font-family: Lato, sans-serif;
 	color: #5222b3;
 	text-decoration: none;
@@ -2288,7 +2298,8 @@ body.page-id-11 #primary article h2 a:hover {
 }
 
 body.blog #primary article .entry-content,
-body.archive #primary article .entry-content {
+body.archive #primary article .entry-content,
+body.error404 #primary p {
 	font-family: Lato, sans-serif;
 	color: #5222b3;
 	font-size: 0.9em;
@@ -2310,6 +2321,65 @@ body.blog #primary article .entry-footer,
 body.archive #primary article .entry-footer {
 	display: none;
 }
+
+
+
+
+body.error404 #main h1 {
+	color: #5222b3;
+}
+
+body.error404 #main .categories ul li a {
+	color: #5222b3;
+}
+
+body.error404 #main form {
+	display: inline-block;
+	/*float: right;*/
+	overflow: hidden;
+	width: 100%;
+}
+
+body.error404 #main form .search-field {
+	font-family: Lato, sans-serif;
+	font-size: 0.875em;
+	border: 1px solid #5222b3;
+	border-radius: 5px;
+	background-color: white;
+	color: #5222b3;
+	padding: 0 10px;
+	margin: 0 20px 0 10px;
+	height: 30px;
+	min-width: 250px;
+	width: 75%;
+	display: block;
+	overflow: hidden;
+	padding-right: 5px;
+	margin: 20px 0;
+	margin: 0 auto;
+}
+
+body.error404 #main form .search-submit {
+	font-family: Lato, sans-serif;
+	font-size: 0.875em;
+	text-transform: uppercase;
+	color: #5222b3;
+	background-color: white;
+	height: 30px;
+	line-height: 28px;
+	padding: 0 25px;
+	display: block;
+	border: 1px solid #5222b3;
+	border-radius: 5px;
+	margin: 20px auto;
+}
+
+body.error404 #main form .search-submit:hover {
+	cursor: pointer;
+	background-color: #5222b3;
+	color: white;
+}
+
 
 
 @media screen and (max-width: 736px) {
