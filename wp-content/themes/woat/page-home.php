@@ -26,7 +26,7 @@ get_header(); ?>
 					<li class="contact"><a href="#contact">Contact</a></li>
 				</ul>
 				<ul class="sm">
-					<li class="menu"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="menu"><a href="#" class="toggle-button"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 					<li class="fb extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 					<li	class="tw extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 					<li class="ig extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>

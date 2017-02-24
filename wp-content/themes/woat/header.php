@@ -100,11 +100,21 @@ var $j = jQuery.noConflict();
 						$("#menu ul.sections li.active").removeClass("active");
 					}
       	}
+
 				if(scroll >= heads_pos[1]-300 && scroll < heads_pos[3]-200){
 					$("#menu").addClass("white");
 				} else {
 					$("#menu").removeClass("white");
 				}
+
+				if(scroll >= heads_pos[0] && scroll < heads_pos[1]){
+					$("#mobile_menu").removeClass("white");
+				} else if(scroll >= heads_pos[3]){
+					$("#mobile_menu").removeClass("white");
+				} else {
+					$("#mobile_menu").addClass("white");
+				}
+
 				if($(window).width()<=736 && scroll < heads_pos[0]){ // Deactivate "About" on mobile load
 					$("#menu ul.sections li.active").removeClass("active");
 				}
@@ -145,13 +155,13 @@ var $j = jQuery.noConflict();
 			$("#masthead").css("background-position-x","right");
 		};
 
-		// $(window).scroll(function(){
-		// 	var picY = Math.floor($("#about").offset().top); // debug?
-		// 	var scroll2 = $(window).scrollTop();
-		// 	var opacity_perc = scroll2/picY;
-		// 	// console.log(scroll2+" / "+picY+" = "+opacity_perc);
-		// 	$("#about aside.pic img").css("opacity",opacity_perc);
-		// });
+		$(window).scroll(function(){
+			var picY = Math.floor($("#about").offset().top); // debug?
+			var scroll2 = $(window).scrollTop();
+			var opacity_perc = scroll2/picY;
+			// console.log(scroll2+" / "+picY+" = "+opacity_perc);
+			$("#about aside.pic img").css("opacity",opacity_perc);
+		});
 
 		// $("#logos").bxSlider({
 		// 	minSlides: 4,
@@ -167,7 +177,52 @@ var $j = jQuery.noConflict();
 		// var box = $('#box').data("plugin_tinycarousel");
 		// console.log(box);
 
+		var vw = $(document).width();
+		vw = vw*0.45;
+
+		$("#slideout_menu").show();
+		var slideout = new Slideout({
+			'panel': document.getElementById('page'),
+			'menu': document.getElementById('mobile_menu'),
+			'padding': vw,
+			// 'tolerance': 70,
+			'side': 'right'
+		});
+
+		$('#mobile_menu ul.sm li.menu, #mobile_menu').on('click', function() {
+			slideout.toggle();
+		});
+
+		$("#slideout_menu ul#panel-menu li a").on('click', function(e) {
+			// debug: update location bar with hash
+			e.preventDefault();
+			slideout.close();
+			var theurl = $(this).attr("href");
+			console.log(theurl);
+			setTimeout(function(){
+				if(theurl==="#follow-bar"){
+					var new_offset = $(theurl).offset().top-310;
+					$.scrollTo(new_offset, 500);
+				} else {
+					$.scrollTo($(theurl), 500);
+				}
+		  }, 500);
+		});
+
+		$(window).scroll(function(){
+        var scroll = $(window).scrollTop();
+				// console.log(scroll);
+				// $("#mobile_menu").offset( { top: scroll+10 } );
+        // $(heads_pos).each(function(i){
+        //     if(scroll >= heads_pos[i] - 55){ // debug - arbitrary
+        //         $("#page-nav li.active").removeClass("active");
+        //         $("#page-nav li."+heads_trim[i]).addClass("active");
+        //     }
+        // });
+    });
+
 	});
+
 </script>
 
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:400,700" rel="stylesheet">
@@ -175,8 +230,22 @@ var $j = jQuery.noConflict();
 </head>
 
 <body <?php body_class(); ?>>
+
+<main id="slideout_menu">
+	<?php
+		if ( is_front_page() ) :
+			wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'panel-menu' ) );
+		else:
+			wp_nav_menu( array( 'menu_id' => '27'));
+		endif;
+	?>
+</main>
+
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'woat' ); ?></a>
+
+	<div id="mobile_menu" class="white">
+	</div>
 
 	<header id="masthead" class="site-header" role="banner">
 		<div class="logo"><a href="<?php echo get_site_url(); ?>"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png" alt="logo"></a></div>
@@ -199,19 +268,35 @@ var $j = jQuery.noConflict();
 		<?php if ( is_front_page() ) : ?>
 
 			<nav id="site-navigation" class="main-navigation home" role="navigation">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button>
+				<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button> -->
 				<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'primary-menu' ) ); ?>
 			</nav><!-- #site-navigation -->
 
 		<?php else : ?>
 
 			<nav id="site-navigation" class="main-navigation not-home" role="navigation">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button>
+				<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button> -->
 				<?php wp_nav_menu( array( 'menu_id' => '27')) ?>
 			</nav><!-- #site-navigation -->
 
 		<?php endif; ?>
 
 	</header><!-- #masthead -->
+
+	<?php if ( is_front_page() ) : ?>
+
+				<nav id="site-navigation" class="main-navigation home" role="navigation">
+					<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button> -->
+					<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'primary-menu' ) ); ?>
+				</nav><!-- #site-navigation -->
+
+			<?php else : ?>
+
+				<nav id="site-navigation" class="main-navigation not-home" role="navigation">
+					<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button> -->
+					<?php wp_nav_menu( array( 'menu_id' => '27')) ?>
+				</nav><!-- #site-navigation -->
+
+			<?php endif; ?>
 
 	<div id="content" class="site-content">

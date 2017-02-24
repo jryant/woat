@@ -26,8 +26,10 @@ get_menu();
 					}
 			} else { }
 
-		echo wpautop(get_the_content());
-		wp_reset_postdata(); ?>
+			echo wpautop(get_the_content());
+			wp_reset_postdata();
+			get_search_form();
+		?>
 		<div class="categories">
 			<h2>Topics</h2>
 			<ul>
