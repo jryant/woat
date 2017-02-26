@@ -2320,6 +2320,7 @@ body.single #masthead .logo {
 
 	#colophon {
 		font-size: 0.75em;
+		padding-top: 35px;
 	}
 
 	#colophon .site-info .sep {
@@ -2686,13 +2687,15 @@ body.error404 #main form .search-submit:hover,
 	body.blog #primary,
 	body.archive #primary,
 	body.page-id-11 #primary {
-		padding: 5vw 40px;
+		padding: 30px 0px;
 	}
 
 	body.blog #primary article,
 	body.archive #primary article,
 	body.page-id-11 #primary article {
-		padding: 5vw;
+		padding: 30px 40px;
+		border: none;
+		border-bottom: 2px solid #3ACCA7;
 		/*width: 45vw;*/
 		/*float: left;*/
 		/*margin-right: 2vw;*/
@@ -2785,7 +2788,7 @@ body.single article.post > div {
 	font-size: 1.125em;
 	margin-top: 50px;
 	margin-bottom: 50px;
-	padding: 30px;
+	padding: 30px 40px;
 	border-style: solid;
 	border-width: 2px;
 	-moz-border-image: url("assets/grad-border-large.png") 2 stretch;
@@ -3075,7 +3078,7 @@ body.single #comments {
 	}
 
 	body.single #bio {
-		padding: 30px;
+		padding: 30px 40px;
 		margin: 0;
 		border-bottom: 2px solid #5222b3;
 	}
@@ -3295,6 +3298,10 @@ body.post-type-archive-portfolio #primary article .post-content {
 
 @media screen and (max-width: 736px) {
 
+	body.post-type-archive-portfolio #primary {
+		padding: 0px 0px 30px 0px;
+	}
+
 	#port_access .right {
 		width: 100%;
 		float: none;
@@ -3326,6 +3333,10 @@ body.post-type-archive-portfolio #primary article .post-content {
 	#port_access > div {
 		padding: 30px 40px;
 		border: 0;
+	}
+
+	body.post-type-archive-portfolio #primary article {
+		margin-bottom: 0px;
 	}
 
 	body.post-type-archive-portfolio #primary article h2 a {
@@ -3424,7 +3435,28 @@ body.single-portfolio div.pdfemb-viewer {
 }
 
 
+@media screen and (max-width: 736px) {
 
+	body.single-portfolio section.intro {
+		padding: 0px;
+	}
+
+	body.single-portfolio section.intro > div {
+		border: none;
+		padding: 30px 40px;
+	}
+
+	body.single-portfolio #primary article {
+		padding: 0px;
+	}
+
+	body.single-portfolio .entry-content {
+		padding: 30px 40px;
+		border: none;
+		border-bottom: 2px solid #3ACCA7;
+	}
+
+}
 
 
 

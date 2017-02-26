@@ -91,13 +91,13 @@ var $j = jQuery.noConflict();
 		if($("body").hasClass("archive")){
 			primary_pos = Math.floor($("#primary").offset().top);
 			has_primary = true;
-			console.log("has class, pos = "+primary_pos);
+			// console.log("has class, pos = "+primary_pos);
 		} else if ($("body").hasClass("single")){
 			primary_pos = Math.floor($("#primary article").offset().top);
 			has_primary = true;
-			console.log("has class, pos = "+primary_pos);
+			// console.log("has class, pos = "+primary_pos);
 		} else {
-			console.log("does not have class");
+			// console.log("does not have class");
 		}
 
 		// for (var i = 0; i < heads.length; i++) {
@@ -268,8 +268,8 @@ var $j = jQuery.noConflict();
 
 	<header id="masthead" class="site-header" role="banner">
 		<?php // debug: remove for launch
-			global $template;
-			print_r($template);
+			// global $template;
+			// print_r($template);
 		?>
 		<div class="logo"><a href="<?php echo get_site_url(); ?>"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png" alt="logo"></a></div>
 		<div class="site-branding">

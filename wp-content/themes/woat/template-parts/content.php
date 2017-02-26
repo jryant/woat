@@ -10,11 +10,11 @@
 ?>
 
 <?php
+	$has_featured_image = (get_the_post_thumbnail()!=NULL) ? true : false ;
 	echo ($has_featured_image) ? '<div class="featured">' : '<div class="featured no-featured-image">' ;
 	echo get_the_post_thumbnail()."</div>";
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php $has_featured_image = (get_the_post_thumbnail()!=NULL) ? true : false ; ?>
 	<?php echo ($has_featured_image) ? '<div class="featured"><a href="'.esc_url(get_permalink()).'" rel="bookmark">'.get_the_post_thumbnail()."</a></div>" : "" ; ?>
 	<?php echo ($has_featured_image) ? '<div class="post-content">' : '<div class="post-content no-featured-image">' ; ?>
 		<header class="entry-header">
