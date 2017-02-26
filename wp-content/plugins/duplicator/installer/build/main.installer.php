@@ -183,15 +183,18 @@ if ($_POST['action_step'] == 1) {
 }
 ?>
 	
+@@CLASS.UTILS.PHP@@
+
+@@CLASS.DB.PHP@@
+
 @@CLASS.LOGGING.PHP@@
 
-@@CLASS.UTILS.PHP@@
+@@CLASS.ENGINE.PHP@@
 
 @@CLASS.CONF.WP.PHP@@
 
 @@CLASS.CONF.SRV.PHP@@
 
-@@CLASS.SERIALIZER.PHP@@
 
 <?php
 if (isset($_POST['action_ajax'])) {

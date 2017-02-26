@@ -1,5 +1,5 @@
 <?php
-$view_state = DUP_UI::GetViewStateArray();
+$view_state = DUP_UI_ViewState::getArray();
 $ui_css_general = (isset($view_state['dup-package-dtl-general-panel']) && $view_state['dup-package-dtl-general-panel']) ? 'display:block' : 'display:none';
 $ui_css_storage = (isset($view_state['dup-package-dtl-storage-panel']) && $view_state['dup-package-dtl-storage-panel']) ? 'display:block' : 'display:none';
 $ui_css_archive = (isset($view_state['dup-package-dtl-archive-panel']) && $view_state['dup-package-dtl-archive-panel']) ? 'display:block' : 'display:none';
@@ -12,7 +12,7 @@ $link_log			= "{$package->StoreURL}{$package->NameHash}.log";
 $link_scan			= "{$package->StoreURL}{$package->NameHash}_scan.json";
 
 $debug_on	     = DUP_Settings::Get('package_debug');
-$mysqldump_on	 = DUP_Settings::Get('package_mysqldump') && DUP_Database::GetMySqlDumpPath();
+$mysqldump_on	 = DUP_Settings::Get('package_mysqldump') && DUP_DB::getMySqlDumpPath();
 $mysqlcompat_on  = isset($Package->Database->Compatible) && strlen($Package->Database->Compatible);
 $mysqlcompat_on  = ($mysqldump_on && $mysqlcompat_on) ? true : false;
 $dbbuild_mode    = ($mysqldump_on) ? 'mysqldump (fast)' : 'PHP (slow)';
@@ -84,8 +84,10 @@ GENERAL -->
 				<a href="javascript:void(0);" onclick="jQuery('#dup-version-info').toggle()"><?php echo $package->Version ?></a> 
 				<div id="dup-version-info">
 					<b><?php _e('WordPress', 'duplicator') ?>:</b> <?php echo strlen($package->VersionWP) ? $package->VersionWP : __('- unknown -', 'duplicator') ?><br/>
-					<b><?php _e('Mysql', 'duplicator') ?>:</b> <?php echo strlen($package->VersionDB) ? $package->VersionDB : __('- unknown -', 'duplicator') ?><br/>
 					<b><?php _e('PHP', 'duplicator') ?>:</b> <?php echo strlen($package->VersionPHP) ? $package->VersionPHP : __('- unknown -', 'duplicator') ?><br/>
+                    <b><?php _e('Mysql', 'duplicator') ?>:</b> 
+                    <?php echo strlen($package->VersionDB) ? $package->VersionDB : __('- unknown -', 'duplicator') ?> |
+                    <?php echo strlen($package->Database->Comments) ? $package->Database->Comments : __('- unknown -', 'duplicator') ?><br/>
 				</div>
 			</td>
 		</tr>
@@ -109,7 +111,7 @@ GENERAL -->
 					
 						<button class="button" onclick="Duplicator.Pack.DownloadFile('<?php echo $link_installer; ?>', this);return false;"><i class="fa fa-bolt"></i> Installer</button>						
 						<button class="button" onclick="Duplicator.Pack.DownloadFile('<?php echo $link_archive; ?>', this);return false;"><i class="fa fa-file-archive-o"></i> Archive - <?php echo $package->ZipSize ?></button>
-						<button class="button" onclick="Duplicator.Pack.DownloadFile('<?php echo $link_sql; ?>', this);return false;"><i class="fa fa-table"></i> &nbsp; SQL - <?php echo DUP_Util::ByteSize($package->Database->Size)  ?></button>
+						<button class="button" onclick="Duplicator.Pack.DownloadFile('<?php echo $link_sql; ?>', this);return false;"><i class="fa fa-table"></i> &nbsp; SQL - <?php echo DUP_Util::byteSize($package->Database->Size)  ?></button>
 						<button class="button" onclick="Duplicator.Pack.DownloadFile('<?php echo $link_log; ?>', this);return false;"><i class="fa fa-list-alt"></i> &nbsp; Log </button>
 						<button class="button" onclick="Duplicator.Pack.ShowLinksDialog(<?php echo "'{$link_sql}','{$link_archive}','{$link_installer}','{$link_log}'" ;?>);" class="thickbox"><i class="fa fa-lock"></i> &nbsp; <?php _e("Share", 'duplicator')?></button>
 					<?php else: ?>

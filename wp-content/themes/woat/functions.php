@@ -200,6 +200,7 @@ function my_new_default_post_type() {
         'hierarchical' => false,
         'rewrite' => array( 'slug' => 'blog' ),
         'query_var' => false,
+				'has_archive' => true,
         'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'post-formats' ),
 				'menu_position'       => 22,
     ) );
@@ -557,3 +558,52 @@ function exclude_pages_from_search($query) {
     return $query;
 }
 add_filter( 'pre_get_posts','exclude_pages_from_search' );
+
+
+// Remove width and height from featured/thumbnail images
+function remove_thumbnail_width_height( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+    $html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
+    return $html;
+}
+
+add_filter( 'post_thumbnail_html', 'remove_thumbnail_width_height', 10, 5 );
+
+
+// Advanced pagination
+/* function pagination($pages = '', $range = 4)
+{
+     $showitems = ($range * 2)+1;
+
+     global $paged;
+     if(empty($paged)) $paged = 1;
+
+     if($pages == '')
+     {
+         global $wp_query;
+         $pages = $wp_query->max_num_pages;
+         if(!$pages)
+         {
+             $pages = 1;
+         }
+     }
+
+     if(1 != $pages)
+     {
+         echo "<div class=\"pagination\"><span>Page ".$paged." of ".$pages."</span>";
+         if($paged > 2 && $paged > $range+1 && $showitems < $pages) echo "<a href='".get_pagenum_link(1)."'>&laquo; First</a>";
+         if($paged > 1 && $showitems < $pages) echo "<a href='".get_pagenum_link($paged - 1)."'>&lsaquo; Previous</a>";
+
+         for ($i=1; $i <= $pages; $i++)
+         {
+             if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
+             {
+                 echo ($paged == $i)? "<span class=\"current\">".$i."</span>":"<a href='".get_pagenum_link($i)."' class=\"inactive\">".$i."</a>";
+             }
+         }
+
+         if ($paged < $pages && $showitems < $pages) echo "<a href=\"".get_pagenum_link($paged + 1)."\">Next &rsaquo;</a>";
+         if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) echo "<a href='".get_pagenum_link($pages)."'>Last &raquo;</a>";
+         echo "</div>\n";
+     }
+}
+*/

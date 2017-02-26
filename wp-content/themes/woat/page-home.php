@@ -14,6 +14,19 @@
 
 get_header(); ?>
 
+	<script type="text/javascript">
+		var $j = jQuery.noConflict();
+		$j(document).ready(function($){
+			$(window).scroll(function(){ // debug: only on home page
+				var picY = Math.floor($("#about").offset().top); // debug?
+				var scroll2 = $(window).scrollTop();
+				var opacity_perc = scroll2/picY;
+				// console.log(scroll2+" / "+picY+" = "+opacity_perc);
+				$("#about aside.pic img").css("opacity",opacity_perc);
+			});
+		});
+	</script>
+
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -22,7 +35,7 @@ get_header(); ?>
 					<li class="about"><a href="#about">About</a></li>
 					<li class="services"><a href="#services">Services</a></li>
 					<li class="blog"><a href="#blog">Blog</a></li>
-					<li class="portfolio"><a href="<?php echo esc_url( home_url( '/portfolio/' ) ); // debug this ?>">Portfolio</a></li>
+					<li class="portfolio"><a href="<?php echo esc_url( home_url( '/portfolio/' ) ); ?>">Portfolio</a></li>
 					<li class="contact"><a href="#contact">Contact</a></li>
 				</ul>
 				<ul class="sm">
@@ -112,8 +125,8 @@ get_header(); ?>
 				<div>
 					<aside class="latest desktop">
 						<?php
-							// $the_query = new WP_Query( array( 'orderby' => 'date', 'order' => 'DESC', 'post_limits' => 1 ) );
-							$the_query = new WP_Query( array( 'p' => 32 ) ); /* debug: change this back */
+							$the_query = new WP_Query( array( 'orderby' => 'date', 'order' => 'ASC', 'post_limits' => 1 ) );
+							// $the_query = new WP_Query( array( 'p' => 32 ) ); /* debug: change this back */
 							if ( $the_query->have_posts() ) {
 									while ( $the_query->have_posts() ) {
 											$the_query->the_post();

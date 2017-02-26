@@ -64,15 +64,18 @@ var $j = jQuery.noConflict();
 		});
 
 		$("#primary-menu li.menu-item-type-custom a, #menu ul.sections li a, #menu ul.sm li.sub a").click(function(e){
-			// debug: update location bar with hash
 			e.preventDefault();
 			var theurl = $(this).attr("href");
 			console.log(theurl);
 			if(theurl==="#follow-bar"){
 				var new_offset = $(theurl).offset().top-310;
 				$.scrollTo(new_offset, 500);
+				window.location = theurl;
+			} else if(theurl.indexOf("portfolio") >= 0){
+				window.location = theurl;
 			} else {
 				$.scrollTo($(theurl), 500);
+				window.location = theurl;
 			}
 		});
 
@@ -83,12 +86,27 @@ var $j = jQuery.noConflict();
       heads_pos[i] = Math.floor($(obj).offset().top); // debug: when viewport width changes, recalculate
     });
 
+		var has_primary = false;
+		var primary_pos;
+		if($("body").hasClass("archive")){
+			primary_pos = Math.floor($("#primary").offset().top);
+			has_primary = true;
+			console.log("has class, pos = "+primary_pos);
+		} else if ($("body").hasClass("single")){
+			primary_pos = Math.floor($("#primary article").offset().top);
+			has_primary = true;
+			console.log("has class, pos = "+primary_pos);
+		} else {
+			console.log("does not have class");
+		}
+
 		// for (var i = 0; i < heads.length; i++) {
 		// 	console.log(i+": "+heads[i]+" -> "+heads_pos[i]);
 		// }
 
-		$(window).scroll(function(){
+		$(window).scroll(function(){ // debug: specific page detection
 			var scroll = $(window).scrollTop();
+			// console.log("scroll = "+scroll);
       $(heads_pos).each(function(i){
       	if(scroll >= heads_pos[i]){
         	$("#menu ul.sections li.active").removeClass("active");
@@ -118,11 +136,23 @@ var $j = jQuery.noConflict();
 				if($(window).width()<=736 && scroll < heads_pos[0]){ // Deactivate "About" on mobile load
 					$("#menu ul.sections li.active").removeClass("active");
 				}
+
     	});
+
+			if(has_primary){
+				if(scroll >= primary_pos){
+					$("#mobile_menu").removeClass("white");
+					console.log(scroll + " > " + primary_pos);
+				} else {
+					$("#mobile_menu").addClass("white");
+					console.log(scroll + " < " + primary_pos);
+				}
+			}
+
     });
 
 		$('#menu').scrollToFixed({
-			marginTop: 0,
+			marginTop: 20,
 			zIndex: 1
 		});
 
@@ -138,10 +168,10 @@ var $j = jQuery.noConflict();
 			}
 		});
 
-		$("a.open-modal, #menu-item-119 a").click(function(){
+		$("a.open-modal, li.open-modal a, #menu-item-119 a").click(function(){
 			$(this).modal({
 				fadeDuration: 250,
-				showClose: false
+				showClose: true
 			});
 		});
 
@@ -155,13 +185,13 @@ var $j = jQuery.noConflict();
 			$("#masthead").css("background-position-x","right");
 		};
 
-		$(window).scroll(function(){
-			var picY = Math.floor($("#about").offset().top); // debug?
-			var scroll2 = $(window).scrollTop();
-			var opacity_perc = scroll2/picY;
-			// console.log(scroll2+" / "+picY+" = "+opacity_perc);
-			$("#about aside.pic img").css("opacity",opacity_perc);
-		});
+		// $(window).scroll(function(){ // moved to home page
+		// 	var picY = Math.floor($("#about").offset().top); // debug?
+		// 	var scroll2 = $(window).scrollTop();
+		// 	var opacity_perc = scroll2/picY;
+		// 	// console.log(scroll2+" / "+picY+" = "+opacity_perc);
+		// 	$("#about aside.pic img").css("opacity",opacity_perc);
+		// });
 
 		// $("#logos").bxSlider({
 		// 	minSlides: 4,
@@ -194,7 +224,6 @@ var $j = jQuery.noConflict();
 		});
 
 		$("#slideout_menu ul#panel-menu li a").on('click', function(e) {
-			// debug: update location bar with hash
 			e.preventDefault();
 			slideout.close();
 			var theurl = $(this).attr("href");
@@ -203,23 +232,13 @@ var $j = jQuery.noConflict();
 				if(theurl==="#follow-bar"){
 					var new_offset = $(theurl).offset().top-310;
 					$.scrollTo(new_offset, 500);
+				} else if(theurl.indexOf("portfolio") >= 0){
+					window.location = theurl;
 				} else {
 					$.scrollTo($(theurl), 500);
 				}
 		  }, 500);
 		});
-
-		$(window).scroll(function(){
-        var scroll = $(window).scrollTop();
-				// console.log(scroll);
-				// $("#mobile_menu").offset( { top: scroll+10 } );
-        // $(heads_pos).each(function(i){
-        //     if(scroll >= heads_pos[i] - 55){ // debug - arbitrary
-        //         $("#page-nav li.active").removeClass("active");
-        //         $("#page-nav li."+heads_trim[i]).addClass("active");
-        //     }
-        // });
-    });
 
 	});
 
@@ -248,6 +267,10 @@ var $j = jQuery.noConflict();
 	</div>
 
 	<header id="masthead" class="site-header" role="banner">
+		<?php // debug: remove for launch
+			global $template;
+			print_r($template);
+		?>
 		<div class="logo"><a href="<?php echo get_site_url(); ?>"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png" alt="logo"></a></div>
 		<div class="site-branding">
 			<?php
@@ -282,21 +305,5 @@ var $j = jQuery.noConflict();
 		<?php endif; ?>
 
 	</header><!-- #masthead -->
-
-	<?php if ( is_front_page() ) : ?>
-
-				<nav id="site-navigation" class="main-navigation home" role="navigation">
-					<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button> -->
-					<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'primary-menu' ) ); ?>
-				</nav><!-- #site-navigation -->
-
-			<?php else : ?>
-
-				<nav id="site-navigation" class="main-navigation not-home" role="navigation">
-					<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'woat' ); ?></button> -->
-					<?php wp_nav_menu( array( 'menu_id' => '27')) ?>
-				</nav><!-- #site-navigation -->
-
-			<?php endif; ?>
 
 	<div id="content" class="site-content">

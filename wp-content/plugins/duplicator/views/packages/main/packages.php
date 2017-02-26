@@ -53,7 +53,7 @@ TOOL-BAR -->
 				<option value="-1" selected="selected"><?php _e("Bulk Actions", 'duplicator') ?></option>
 				<option value="delete" title="<?php _e("Delete selected package(s)", 'duplicator') ?>"><?php _e("Delete", 'duplicator') ?></option>
 			</select>
-			<input type="button" id="dup-pack-bulk-apply" class="button action" value="<?php _e("Apply", 'duplicator') ?>" onclick="Duplicator.Pack.Delete()">
+			<input type="button" id="dup-pack-bulk-apply" class="button action" value="<?php _e("Apply", 'duplicator') ?>" onclick="Duplicator.Pack.ConfirmDelete()">
 		</td>
 		<td align="center" >
 			<a href="?page=duplicator-tools" id="btn-logs-dialog" class="button"  title="<?php _e("Package Logs", 'duplicator') ?>..."><i class="fa fa-list-alt"></i>
@@ -131,8 +131,8 @@ TOOL-BAR -->
 			<?php if ($row['status'] >= 100) : ?>
 				<tr class="dup-pack-info <?php echo $css_alt ?>">
 					<td class="pass"><input name="delete_confirm" type="checkbox" id="<?php echo $row['id'] ;?>" /></td>
-					<td><?php echo DUP_Package::FormatCreatedDate($row['created'], $ui_create_frmt);?></td>
-					<td><?php echo DUP_Util::ByteSize($pack_archive_size); ?></td>
+					<td><?php echo DUP_Package::getCreatedDateFormat($row['created'], $ui_create_frmt);?></td>
+					<td><?php echo DUP_Util::byteSize($pack_archive_size); ?></td>
 					<td class='pack-name'><?php	echo  $pack_name ;?></td>
 					<td class="get-btns">
 						<button id="<?php echo "{$uniqueid}_installer.php" ?>" class="button no-select" onclick="Duplicator.Pack.DownloadFile('<?php echo $installfilelink; ?>', this); return false;">
@@ -162,8 +162,8 @@ TOOL-BAR -->
 				?>
 				<tr class="dup-pack-info  <?php echo $css_alt ?>">
 					<td class="fail"><input name="delete_confirm" type="checkbox" id="<?php echo $row['id'] ;?>" /></td>
-					<td><?php echo DUP_Package::FormatCreatedDate($row['created'], $ui_create_frmt);?></td>
-					<td><?php echo DUP_Util::ByteSize($size); ?></td>
+					<td><?php echo DUP_Package::getCreatedDateFormat($row['created'], $ui_create_frmt);?></td>
+					<td><?php echo DUP_Util::byteSize($size); ?></td>
 					<td class='pack-name'><?php echo $pack_name ;?></td>
 					<td class="get-btns error-msg" colspan="2">		
 						<span>
@@ -185,7 +185,7 @@ TOOL-BAR -->
 		<tr>
 			<th colspan="11" style='text-align:right; font-size:12px'>						
 				<?php echo _e("Packages", 'duplicator') . ': ' . $totalElements; ?> |
-				<?php echo _e("Total Size", 'duplicator') . ': ' . DUP_Util::ByteSize($totalSize); ?> 
+				<?php echo _e("Total Size", 'duplicator') . ': ' . DUP_Util::byteSize($totalSize); ?> 
 			</th>
 		</tr>
 	</tfoot>
@@ -193,43 +193,80 @@ TOOL-BAR -->
 <?php endif; ?>	
 </form>
 
+<!-- ==========================================
+THICK-BOX DIALOGS: -->
+<?php
+	$alert1 = new DUP_UI_Dialog();
+	$alert1->title		= __('Bulk Action Required', 'duplicator');
+	$alert1->message	= __('Please select an action from the "Bulk Actions" drop down menu!', 'duplicator');
+	$alert1->initAlert();
+	
+	$alert2 = new DUP_UI_Dialog();
+	$alert2->title		= __('Selection Required', 'duplicator', 'duplicator');
+	$alert2->message	= __('Please select at least one package to delete!', 'duplicator');
+	$alert2->initAlert();
+	
+	$confirm1 = new DUP_UI_Dialog();
+	$confirm1->title			= __('Delete Packages?', 'duplicator');
+	$confirm1->message			= __('Are you sure, you want to delete the selected package(s)?', 'duplicator');
+	$confirm1->progressText	= __('Removing Packages, Please Wait...', 'duplicator');
+	$confirm1->jscallback		= 'Duplicator.Pack.Delete()';
+	$confirm1->initConfirm();
+?>
+
 <script type="text/javascript">
 jQuery(document).ready(function($) 
 {
+	
+	/*	Creats a comma seperate list of all selected package ids  */
+	Duplicator.Pack.GetDeleteList = function () 
+	{
+		var arr = new Array;
+		var count = 0;
+		$("input[name=delete_confirm]").each(function () {
+			if (this.checked) {
+				arr[count++] = this.id;
+			}
+		});
+		var list = arr.join(',');
+		return list;
+	}
+	
+	/*	Provides the correct confirmation items when deleting packages */
+	Duplicator.Pack.ConfirmDelete = function () 
+	{
+		if ($("#dup-pack-bulk-actions").val() != "delete") 
+		{
+			<?php $alert1->showAlert(); ?>
+			return;
+		}
+		
+		var list = Duplicator.Pack.GetDeleteList();
+		if (list.length == 0) 
+		{
+			<?php $alert2->showAlert(); ?>
+			return;
+		}
+		<?php $confirm1->showConfirm(); ?>
+	}
+	
+	
 	/*	Removes all selected package sets 
 	 *	@param event	To prevent bubbling */
 	Duplicator.Pack.Delete = function (event) 
 	{
-		var arr = new Array;
-		var count = 0;
-		
-		if ($("#dup-pack-bulk-actions").val() != "delete") {
-			alert("<?php _e('Please select an action from the bulk action drop down menu to perform a specific action.', 'duplicator') ?>");
-			return;
-		}
-		$("input[name=delete_confirm]").each(function() {
-			 if (this.checked) { arr[count++] = this.id; }
+		var list = Duplicator.Pack.GetDeleteList();
+
+		$.ajax({
+			type: "POST",
+			url: ajaxurl,
+			dataType: "json",
+			data: {action : 'duplicator_package_delete', duplicator_delid : list, nonce: '<?php echo $ajax_nonce; ?>' },
+			complete: function(data) { 
+				Duplicator.ReloadWindow(data); 
+			}
 		});
-		var list = arr.join(',');
-		if (list.length == 0) {
-			alert("<?php _e('Please select at least one package to delete.', 'duplicator') ?>");
-			return;
-		}
-		
-		if (confirm("<?php _e('Are you sure, you want to delete the selected package(s)?', 'duplicator') ?>"))
-		{
-			$.ajax({
-				type: "POST",
-				url: ajaxurl,
-				dataType: "json",
-				data: {action : 'duplicator_package_delete', duplicator_delid : list, nonce: '<?php echo $ajax_nonce; ?>' },
-				success: function(data) { 
-					Duplicator.ReloadWindow(data); 
-				}
-			});
-		} 
-		if (event)
-			event.preventDefault(); 
+
 	};
 	
 	/* Toogles the Bulk Action Check boxes */

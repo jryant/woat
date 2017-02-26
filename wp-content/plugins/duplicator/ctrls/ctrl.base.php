@@ -1,6 +1,6 @@
 <?php
 
-require_once(DUPLICATOR_PLUGIN_PATH . '/classes/utility.php');
+require_once(DUPLICATOR_PLUGIN_PATH . '/classes/utilities/class.util.php');
 
 //Enum used to define the various test statues 
 final class DUP_CTRL_Status
@@ -78,7 +78,7 @@ class DUP_CTRL_Result
 	
 	function __construct(DUP_CTRL_Base $CTRL_OBJ) 
 	{
-		DUP_Util::CheckPermissions('read');
+		DUP_Util::hasCapability('read');
 		$this->time_start	= $this->microtimeFloat();
 		$this->CTRL			= $CTRL_OBJ;
 		

@@ -1026,12 +1026,31 @@ h1, h2, h3, h4, h5, h6 {
 	clear: none;
 }
 
+.entry-content ul,
+.entry-content ol {
+	margin-left: 0px;
+}
+
+.entry-content li {
+	margin-bottom: 15px;
+}
+
 a.read-more:link,
 a.read-more:visited,
+a.more-link:link,
+a.more-link:visited,
 #contact a.open-modal:link,
 #contact a.open-modal:visited,
 #blog aside p a:link,
-#blog aside p a:visited {
+#blog aside p a:visited,
+body.single .entry-content a:link,
+body.single .entry-content a:visited,
+body.search .entry-content a:link,
+body.search .entry-content a:visited,
+body.archive .entry-content a:link,
+body.archive .entry-content a:visited,
+body.blog .entry-content a:link,
+body.blog .entry-content a:visited {
 	color: #5222b3;
 	font-weight: bold;
 	text-decoration: none;
@@ -1070,6 +1089,8 @@ a.read-more:visited {
 
 a.read-more:hover,
 a.read-more:active,
+a.more-link:hover,
+a.more-link:active,
 #contact a.open-modal:hover,
 #contact a.open-modal:active,
 #portfolio_intro a:hover,
@@ -1077,7 +1098,15 @@ a.read-more:active,
 #blog article p a:hover,
 #blog article p a:active,
 #blog_intro p a:hover,
-#blog_intro p a:active {
+#blog_intro p a:active,
+body.single .entry-content a:hover,
+body.single .entry-content a:active,
+body.search .entry-content a:hover,
+body.search .entry-content a:active,
+body.archive .entry-content a:hover,
+body.archive .entry-content a:active,
+body.blog .entry-content a:hover,
+body.blog .entry-content a:active  {
 	border-bottom: 1px solid #3ACCA7;
 }
 
@@ -1116,8 +1145,15 @@ a.read-more:active,
 	margin-bottom: 10vh;
 	max-width: 284px;
 	background-image: url("assets/whale-tale_logo_2017-RGB.png");
+	/*max-width: 290px;
+	background-image: url("assets/whale-tale_logo_2017-RGB-withshadow.png");*/
 	background-repeat: no-repeat;
 	background-size: contain;
+}
+
+body.single #masthead .logo {
+	max-width: 290px;
+	background-image: url("assets/whale-tale_logo_2017-RGB-withshadow.png");
 }
 
 #masthead .logo img {
@@ -1196,7 +1232,7 @@ a.read-more:active,
 	}
 
 	#masthead .logo {
-		max-width: 50vh;
+		max-width: 43vh;
 		margin-top: 25vh;
 		background-image: url("assets/whale-tale_logo_2017-RGB_white-500x500.png");
 	}
@@ -2265,8 +2301,19 @@ a.read-more:active,
 
 }
 
-#colophon a {
+#colophon a:link,
+#colophon a:visited {
 	color: #3ACCA7;
+	text-decoration: none;
+	border-bottom: 1px solid #3ACCA7;
+	padding-bottom: 1px;
+}
+
+#colophon a:hover,
+#colophon a:active {
+	color: #5222b3;
+	text-decoration: none;
+	border-bottom: 1px solid #5222b3;
 }
 
 @media screen and (max-width: 736px) {
@@ -2289,7 +2336,11 @@ a.read-more:active,
 # Blog main
 --------------------------------------------------------------*/
 
-body.blog #menu-item-117 a:after {
+body.blog #menu-item-117 a:after,
+body.post-type-archive-post #site-navigation ul li.menu-item-117 a:after,
+body.post-type-archive-portfolio #site-navigation ul li.menu-item-118 a:after,
+body.category #site-navigation ul li.menu-item-117 a:after,
+body.search #site-navigation ul li.menu-item-117 a:after { /* debug */
 	background-color: white;
 }
 
@@ -2301,13 +2352,15 @@ body.blog #menu-item-117 a:after {
 	margin: 0 auto;
 }
 
-body.blog #menu {
+body.blog #menu,
+body.post-type-archive-post #menu {
 	position: absolute;
 	top: 20px;
 }
 
 #blog_intro,
-#search-term {
+#search-term,
+#page-no {
 	/*background-color: #5222b3;*/
 	color: white;
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4d8fb2+0,6d28c4+100 */
@@ -2322,6 +2375,8 @@ body.blog #menu {
 body.error404 #main {
 	font-family: Lato, sans-serif;
 	padding: 70px 100px;
+	position: relative;
+	z-index: 2;
 }
 
 #blog_intro > div,
@@ -2334,7 +2389,8 @@ body.error404 #main {
 	margin: 0 auto;
 }
 
-#search-term > div {
+#search-term > div,
+#page-no > div {
 	padding: 20px;
 	/*border: 2px solid white;*/
 	/*border-radius: 5px;*/
@@ -2345,6 +2401,7 @@ body.error404 #main {
 
 #blog_intro h1,
 #search-term h1,
+#page-no .number,
 body.error404 h1 {
 	font-family: Montserrat, sans-serif;
 	font-weight: bold;
@@ -2352,8 +2409,13 @@ body.error404 h1 {
 	text-transform: uppercase;
 }
 
+#page-no .number {
+	font-size: 1.25em;
+}
+
 #blog_intro a,
-#search-term a {
+#search-term a,
+#page-no a {
 	color: white;
 }
 
@@ -2362,6 +2424,7 @@ body.error404 .categories ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
+	margin-bottom: 25px;
 }
 
 #blog_intro .categories ul li,
@@ -2387,6 +2450,7 @@ body.error404 .categories ul li a:hover {
 
 body.blog #primary,
 body.archive #primary,
+body.post-type-archive-post #primary,
 body.page-id-11 #primary,
 body.error404 #primary,
 body.search #primary {
@@ -2397,6 +2461,7 @@ body.search #primary {
 
 body.blog #primary .featured,
 body.archive #primary .featured,
+body.post-type-archive-post #primary .featured,
 body.page-id-11 #primary .featured,
 body.search #primary .featured {
 	display: none;
@@ -2404,6 +2469,7 @@ body.search #primary .featured {
 
 body.blog #primary article,
 body.archive #primary article,
+body.post-type-archive-post #primary article,
 body.page-id-11 #primary article,
 body.error404 #main,
 body.search #primary article {
@@ -2418,29 +2484,51 @@ body.search #primary article {
 
 body.blog #primary article .featured,
 body.archive #primary article .featured,
+body.post-type-archive-post #primary article .featured,
 body.search #primary article .featured {
 	display: block;
 	float: left;
+	/*border: 1px solid #5222b3;
+	border-radius: 5px;
+	max-height: 300px;*/
+	width: 50%;
+	overflow: hidden;
+	/*margin-right: 20px;*/
+}
+
+body.blog #primary article .featured img,
+body.archive #primary article .featured img,
+body.post-type-archive-post #primary article .featured img,
+body.search #primary article .featured img {
 	border: 1px solid #5222b3;
 	border-radius: 5px;
-	width: 50%;
-	max-height: 300px;
-	overflow: hidden;
-	margin-right: 20px;
+	max-width: 100%;
+	max-height: 330px;
 }
 
 body.page-id-11 #primary article .featured { display: none; }
 
 body.blog #primary article .post-content,
 body.archive #primary article .post-content,
+body.post-type-archive-post #primary article .post-content,
 body.search #primary article .post-content {
 	width: 50%;
 	margin-left: 50%;
 	padding-left: 30px;
 }
 
+body.blog #primary article .post-content.no-featured-image,
+body.archive #primary article .post-content.no-featured-image,
+body.post-type-archive-post #primary article .post-content.no-featured-image,
+body.search #primary article .post-content.no-featured-image {
+	width: 100%;
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
 body.blog #primary article h2,
 body.archive #primary article h2,
+body.post-type-archive-post #primary article h2,
 body.page-id-11 #primary article h2,
 body.search #primary article h2 {
 	margin: 0;
@@ -2448,6 +2536,7 @@ body.search #primary article h2 {
 
 body.blog #primary article h2 a,
 body.archive #primary article h2 a,
+body.post-type-archive-post #primary article h2 a,
 body.page-id-11 #primary article h2 a,
 body.error404 #primary h2,
 body.search #primary article h2 a {
@@ -2459,6 +2548,7 @@ body.search #primary article h2 a {
 
 body.blog #primary article h2 a:hover,
 body.archive #primary article h2 a:hover,
+body.post-type-archive-post #primary article h2 a:hover,
 body.page-id-11 #primary article h2 a:hover,
 body.search #primary article h2 a:hover {
 	border-bottom: 1px solid #5222b3;
@@ -2466,6 +2556,7 @@ body.search #primary article h2 a:hover {
 
 body.blog #primary article .entry-content,
 body.archive #primary article .entry-content,
+body.post-type-archive-post #primary article .entry-content,
 body.error404 #primary p,
 body.search #primary article .entry-content {
 	font-family: Lato, sans-serif;
@@ -2473,8 +2564,16 @@ body.search #primary article .entry-content {
 	font-size: 0.9em;
 }
 
+body.blog #primary article .entry-content,
+body.archive #primary article .entry-content,
+body.post-type-archive-post #primary article .entry-content,
+body.search #primary article .entry-content {
+	margin-top: 0px;
+}
+
 body.blog #primary article a.more-link,
 body.archive #primary article a.more-link,
+body.post-type-archive-post #primary article a.more-link,
 body.search #primary article a.more-link {
 	font-weight: bold;
 	color: #5222b3;
@@ -2483,12 +2582,14 @@ body.search #primary article a.more-link {
 
 body.blog #primary article a.more-link:hover,
 body.archive #primary article a.more-link:hover,
+body.post-type-archive-post #primary article a.more-link:hover,
 body.search #primary article a.more-link:hover {
-	border-bottom: 1px solid #5222b3;
+	/*border-bottom: 1px solid #5222b3;*/
 }
 
 body.blog #primary article .entry-footer,
 body.archive #primary article .entry-footer,
+body.post-type-archive-post #primary article .entry-footer,
 body.search #primary article .entry-footer {
 	display: none;
 }
@@ -2564,7 +2665,7 @@ body.error404 #main form .search-submit:hover,
 	}
 
 	#blog_intro > div {
-		padding: 30px;
+		padding: 30px 40px;
 		border: 0;
 	}
 
@@ -2585,7 +2686,7 @@ body.error404 #main form .search-submit:hover,
 	body.blog #primary,
 	body.archive #primary,
 	body.page-id-11 #primary {
-		padding: 5vw;
+		padding: 5vw 40px;
 	}
 
 	body.blog #primary article,
@@ -2607,6 +2708,7 @@ body.error404 #main form .search-submit:hover,
 	}
 
 	body.blog #primary article h2 ,
+	body.archive #primary article h2,
 	body.archive #primary article h2 {
 		margin-bottom: 0px;
 	}
@@ -2661,6 +2763,15 @@ body.single .featured img {
 	width: 100%;
 }
 
+body.single .featured.no-featured-image {
+	height: 145px;
+	background: #4d8fb2; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #4d8fb2 0%, #6d28c4 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg,  #4d8fb2 0%,#6d28c4 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg,  #4d8fb2 0%,#6d28c4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d8fb2', endColorstr='#6d28c4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
 body.single div.featured:nth-child(1) {
 	display: none;
 }
@@ -2673,14 +2784,14 @@ body.single article.post > div {
 	font-family: Lato, sans-serif;
 	font-size: 1.125em;
 	margin-top: 50px;
-	margin-bottom: 30px;
+	margin-bottom: 50px;
 	padding: 30px;
 	border-style: solid;
 	border-width: 2px;
-	-moz-border-image: url("assets/grad-border.png") 2 stretch;
-	-webkit-border-image: url("assets/grad-border.png") 2 stretch;
-	-o-border-image: url("assets/grad-border.png") 2 stretch;
-	border-image: url("assets/grad-border.png") 2 fill stretch;
+	-moz-border-image: url("assets/grad-border-large.png") 2 stretch;
+	-webkit-border-image: url("assets/grad-border-large.png") 2 stretch;
+	-o-border-image: url("assets/grad-border-large.png") 2 stretch;
+	border-image: url("assets/grad-border-large.png") 2 fill stretch;
 }
 
 body.single article.post header h1 {
@@ -2694,6 +2805,7 @@ body.single article.post header h1 {
 
 body.single article.post .entry-content {
 	margin: 0;
+	padding-bottom: 15px;
 }
 
 body.single article.post footer ul.post-categories {
@@ -2702,24 +2814,36 @@ body.single article.post footer ul.post-categories {
 	padding: 0;
 }
 
-body.single article.post footer ul.post-categories li {
+.posts-navigation .nav-previous,
+.posts-navigation .nav-next {
+	line-height: 2.5em;
+}
+
+body.single article.post footer ul.post-categories li,
+.posts-navigation .nav-previous,
+.posts-navigation .nav-next {
 	display: inline-block;
 	font-family: Lato, sans-serif;
 	font-size: 0.75em;
 	text-transform: uppercase;
 	/*line-height: 1.5em;*/
 	margin-right: 5px;
+	margin-bottom: 14px;
 
 }
 
-body.single article.post footer .post-categories a {
+body.single article.post footer .post-categories a,
+.posts-navigation .nav-previous a,
+.posts-navigation .nav-next a {
 	padding: 6px 10px;
 	text-decoration: none;
 	color: #5222b3;
 	border: 1px solid #5222b3;
 }
 
-body.single article.post footer .post-categories a:hover {
+body.single article.post footer .post-categories a:hover,
+.posts-navigation .nav-previous a:hover,
+.posts-navigation .nav-next a:hover {
 	background-color: #5222b3;
 	color: white;
 }
@@ -2736,6 +2860,7 @@ body.single #bio > div {
 	margin: 0 auto;
 	border-bottom: 2px solid #5222b3;
 	min-height: 220px; /* debug: better method? */
+	padding-bottom: 30px;
 }
 
 body.single #bio aside {
@@ -2836,7 +2961,7 @@ body.single .post-navigation > div {
 body.single .post-navigation .nav-links span {
 	font-weight: bold;
 	display: block;
-	margin-top: 15px;
+	/*margin-top: 15px;*/
 }
 
 body.single .post-navigation .nav-links .nav-next .arrow,
@@ -2995,6 +3120,10 @@ body.single #comments {
 		width: 20vw;
 	}
 
+	body.single .featured.no-featured-image {
+		height: 125px;
+	}
+
 	body.single #bio aside {
 		margin-right: 0;
 		float: none;
@@ -3040,6 +3169,8 @@ body.post-type-archive #menu {
 #port_access {
 	font-family: Lato, sans-serif;
 	padding: 70px 100px;
+	position: relative;
+	z-index: 2;
 }
 
 #portfolio_intro > div,
@@ -3106,17 +3237,17 @@ body.post-type-archive #menu {
 
 #port_access { margin-bottom: 70px; }
 
-body.archive #primary article .post-content {
+/*body.archive #primary article .post-content {
 	width: 100%;
 	padding-left: 0;
 	margin-left: 0;
-}
+}*/
 
-body.post-type-archive #primary article h2 {
+body.post-type-archive-portfolio #primary article h2 {
 	margin: 0 0 20px 0;
 }
 
-body.post-type-archive #primary article h2 a {
+body.post-type-archive-portfolio #primary article h2 a {
 	font-family: Montserrat, sans-serif;
 	font-weight: bold;
 	font-size: 1.5em;
@@ -3125,11 +3256,11 @@ body.post-type-archive #primary article h2 a {
 	color: #3ACCA7;
 }
 
-body.post-type-archive #primary article h2 .co {
+body.post-type-archive-portfolio #primary article h2 .co {
 	color: #5222b3;
 }
 
-body.post-type-archive #primary article {
+body.post-type-archive-portfolio #primary article {
 	font-family: Lato, sans-serif;
 	/*color: #5222b3;*/
 	font-size: 1em;
@@ -3137,26 +3268,30 @@ body.post-type-archive #primary article {
 	margin-bottom: 35px;
 }
 
-body.post-type-archive #primary article .meta {
+body.post-type-archive-portfolio #primary article .meta {
 	color: #5222b3;
 	font-size: 0.9em;
 	text-transform: uppercase;
 }
 
-body.post-type-archive #primary article .meta .sep {
+body.post-type-archive-portfolio #primary article .meta .sep {
 	margin: 0 5px;
 	padding: 0 5px;
 }
 
-body.post-type-archive #primary article .entry-content {
+body.post-type-archive-portfolio #primary article .entry-content {
 	margin: 0;
 }
 
-body.post-type-archive #primary article p {
+body.post-type-archive-portfolio #primary article p {
 	margin-bottom: 0;
 }
 
-
+body.post-type-archive-portfolio #primary article .post-content {
+	width: 100%;
+	margin-left: 0px;
+	padding-left: 0px;
+}
 
 @media screen and (max-width: 736px) {
 
@@ -3189,11 +3324,11 @@ body.post-type-archive #primary article p {
 
 	#portfolio_intro > div,
 	#port_access > div {
-		padding: 30px;
+		padding: 30px 40px;
 		border: 0;
 	}
 
-	body.post-type-archive #primary article h2 a {
+	body.post-type-archive-portfolio #primary article h2 a {
 		line-height: 1.2em;
 	}
 
@@ -3271,17 +3406,17 @@ body.single-portfolio .entry-content {
 }
 
 body.single-portfolio #primary article {
-	padding: 70px 100px;
+	padding: 70px 100px 30px 100px;
 }
 
 body.single-portfolio .entry-content {
 	padding: 30px;
 	border-style: solid;
 	border-width: 2px;
-	-moz-border-image: url("assets/grad-border.png") 2 stretch;
-	-webkit-border-image: url("assets/grad-border.png") 2 stretch;
-	-o-border-image: url("assets/grad-border.png") 2 stretch;
-	border-image: url("assets/grad-border.png") 2 fill stretch;
+	-moz-border-image: url("assets/grad-border-large.png") 2 stretch;
+	-webkit-border-image: url("assets/grad-border-large.png") 2 stretch;
+	-o-border-image: url("assets/grad-border-large.png") 2 stretch;
+	border-image: url("assets/grad-border-large.png") 2 fill stretch;
 }
 
 body.single-portfolio div.pdfemb-viewer {
@@ -3321,7 +3456,7 @@ body.single-portfolio div.pdfemb-viewer {
 .slideout-panel {
   position: relative;
   z-index: 1;
-  will-change: transform;
+  /*will-change: transform;*/
   background-color: #FFF; /* A background-color is required */
   min-height: 100vh;
 }

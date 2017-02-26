@@ -49,7 +49,20 @@ get_menu();
 		<main id="main" class="site-main" role="main">
 
 		<?php
-		if ( have_posts() ) :
+
+		global $post;
+    $tmp_post = $post;
+		$paged = ( get_query_var('page') ) ? get_query_var('page') : 1;
+    $args = array (
+        'post_type'   => 'post',
+        'post_status' => 'publish',
+        'paged' => $paged,
+    );
+  	$wp_query= null;
+    $wp_query = new WP_Query();
+    $wp_query->query( $args );
+
+		if ( $wp_query->have_posts() ) :
 
 			if ( is_home() && ! is_front_page() ) : ?>
 				<header>
@@ -60,7 +73,7 @@ get_menu();
 			endif;
 
 			/* Start the Loop */
-			while ( have_posts() ) : the_post();
+			while ( $wp_query->have_posts() ) : $wp_query->the_post();
 
 				/*
 				 * Include the Post-Format-specific template for the content.
@@ -71,7 +84,11 @@ get_menu();
 
 			endwhile;
 
-			the_posts_navigation();
+			if (function_exists("pagination")) {
+    		pagination($additional_loop->max_num_pages);
+			} else {
+				the_posts_navigation();
+			}
 
 		else :
 

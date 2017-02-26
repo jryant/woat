@@ -131,7 +131,7 @@ ARCHIVE -->
                 <!-- FILTERS -->
                 <?php
 					$uploads = wp_upload_dir();
-					$upload_dir = DUP_Util::SafePath($uploads['basedir']);
+					$upload_dir = DUP_Util::safePath($uploads['basedir']);
                 ?>
                 <div class="dup-enable-filters">
                     <input type="checkbox" id="filter-on" name="filter-on" onclick="Duplicator.Pack.ToggleFileFilters()" <?php echo ($Package->Archive->FilterOn) ? "checked='checked'" :""; ?> />	
@@ -148,7 +148,7 @@ ARCHIVE -->
                     <div class='dup-quick-links'>
                         <a href="javascript:void(0)" onclick="Duplicator.Pack.AddExcludePath('<?php echo rtrim(DUPLICATOR_WPROOTPATH, '/'); ?>')">[<?php _e("root path", 'duplicator') ?>]</a>
                         <a href="javascript:void(0)" onclick="Duplicator.Pack.AddExcludePath('<?php echo rtrim($upload_dir, '/'); ?>')">[<?php _e("wp-uploads", 'duplicator') ?>]</a>
-                        <a href="javascript:void(0)" onclick="Duplicator.Pack.AddExcludePath('<?php echo DUP_Util::SafePath(WP_CONTENT_DIR); ?>/cache')">[<?php _e("cache", 'duplicator') ?>]</a>
+                        <a href="javascript:void(0)" onclick="Duplicator.Pack.AddExcludePath('<?php echo DUP_Util::safePath(WP_CONTENT_DIR); ?>/cache')">[<?php _e("cache", 'duplicator') ?>]</a>
                         <a href="javascript:void(0)" onclick="jQuery('#filter-dirs').val('')"><?php _e("(clear)", 'duplicator') ?></a>
                     </div>
                     <textarea name="filter-dirs" id="filter-dirs" placeholder="/full_path/exclude_path1;/full_path/exclude_path2;"><?php echo str_replace(";", ";\n", esc_textarea($Package->Archive->FilterDirs)) ?></textarea><br/>
@@ -362,7 +362,7 @@ INSTALLER -->
 		<div style="padding:10px 0 0 12px;">
 			<span class="dup-pro-text">
 				<img src="<?php echo DUPLICATOR_PLUGIN_URL ?>assets/img/cpanel-48.png" style="width:16px; height:12px" />
-				<?php _e("Connect to a cPanel database with.", 'duplicator'); ?> 
+				<?php _e("Create the database and user directly from the installer with ", 'duplicator'); ?>
 				<a href="https://snapcreek.com/duplicator/?utm_source=duplicator_free&utm_medium=wordpress_plugin&utm_content=free_cpanel&utm_campaign=duplicator_pro" target="_blank"><?php _e('Professional', 'duplicator');?></a>
 				<i class="fa fa-lightbulb-o" 
 					data-tooltip-title="<?php _e("cPanel Access:", 'duplicator'); ?>" 
@@ -376,12 +376,22 @@ INSTALLER -->
 
 
 <div class="dup-button-footer">
-    <input type="button" value="<?php _e("Reset", 'duplicator') ?>" class="button button-large" <?php echo ($dup_tests['Success']) ? '' :'disabled="disabled"'; ?> onclick="Duplicator.Pack.ResetSettings()" />
+    <input type="button" value="<?php _e("Reset", 'duplicator') ?>" class="button button-large" <?php echo ($dup_tests['Success']) ? '' :'disabled="disabled"'; ?> onclick="Duplicator.Pack.ConfirmReset()" />
     <input type="submit" value="<?php _e("Next", 'duplicator') ?> &#9654;" class="button button-primary button-large" <?php echo ($dup_tests['Success']) ? '' :'disabled="disabled"'; ?> />
 </div>
 
 </form>
 
+<!-- ==========================================
+THICK-BOX DIALOGS: -->
+<?php	
+
+	$confirm1 = new DUP_UI_Dialog();
+	$confirm1->title			= __('Reset Package Settings?', 'duplicator');
+	$confirm1->message			= __('This will clear and reset all of the current package settings.  Would you like to continue?', 'duplicator');
+	$confirm1->jscallback		= 'Duplicator.Pack.ResetSettings()';
+	$confirm1->initConfirm();
+?>
 <script>
 jQuery(document).ready(function ($) 
 {
@@ -433,13 +443,14 @@ jQuery(document).ready(function ($)
 		$("#filter-exts").val(text);
 	};
 	
+	Duplicator.Pack.ConfirmReset = function () 
+	{
+		 <?php $confirm1->showConfirm(); ?>
+	}
 
 	Duplicator.Pack.ResetSettings = function () 
 	{
 		var key = 'duplicator_package_active';
-		var result = confirm('<?php _e("This will reset all of the current package settings.  Would you like to continue?", "duplicator"); ?>');
-		if (!result)
-			return;
 
 		jQuery('#dup-form-opts-action').val(key);
 		jQuery('#dup-form-opts').attr('action', '?page=duplicator&tab=new1')
