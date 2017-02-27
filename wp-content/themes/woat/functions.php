@@ -107,7 +107,7 @@ add_action( 'widgets_init', 'woat_widgets_init' );
 function woat_scripts() {
 	wp_enqueue_style( 'woat-style', get_stylesheet_uri() );
 
-	wp_enqueue_script( 'woat-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '1.0.0', true );
+	wp_enqueue_script( 'woat-navigation', get_template_directory_uri() . '/js/navigation.min.js', array(), '1.0.0', true );
 
 	wp_enqueue_script( 'woat-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 

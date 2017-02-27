@@ -1274,7 +1274,7 @@ body.single #masthead .logo {
 	position: absolute;
 	top: -320px;
 	right: 0;
-	z-index: 1;
+	z-index: -1;
 }
 
 @media screen and (max-width: 736px) {
@@ -1659,7 +1659,7 @@ body.single #masthead .logo {
 }
 
 #blog > div {
-	padding: 230px 215px 230px 105px;
+	padding: 130px 215px 230px 105px;
 }
 
 #blog header {
@@ -2711,9 +2711,12 @@ body.error404 #main form .search-submit:hover,
 	}
 
 	body.blog #primary article h2 ,
-	body.archive #primary article h2,
 	body.archive #primary article h2 {
 		margin-bottom: 0px;
+	}
+
+	body.post-type-archive-portfolio #primary article h2 {
+		font-size: 1.25em;
 	}
 
 	body.blog #primary article .entry-content {
@@ -2764,6 +2767,8 @@ body.single #menu {
 
 body.single .featured img {
 	width: 100%;
+	position: relative;
+	/*z-index: 2;*/
 }
 
 body.single .featured.no-featured-image {
