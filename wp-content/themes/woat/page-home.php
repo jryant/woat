@@ -40,10 +40,10 @@ get_header(); ?>
 				</ul>
 				<ul class="sm">
 					<li class="menu"><a href="#" class="toggle-button"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="fb extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li	class="tw extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="fb extra"><a href="https://www.facebook.com/whaleofatalecontent/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li	class="tw extra"><a href="http://www.twitter.com/thewritewhale"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 					<li class="ig extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="li extra"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="li extra"><a href="https://ca.linkedin.com/in/kylarosesims"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 					<li class="sub extra"><a href="#follow-bar"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 				</ul>
 			</div>
@@ -213,10 +213,10 @@ get_header(); ?>
 						<span class="follow">
 							<p class="follow-label">Follow Me</p>
 							<ul class="sm">
-								<li class="fb"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-								<li	class="tw"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+								<li class="fb"><a href="https://www.facebook.com/whaleofatalecontent/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+								<li	class="tw"><a href="http://www.twitter.com/thewritewhale"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 								<li class="ig"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-								<li class="li"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+								<li class="li"><a href="https://ca.linkedin.com/in/kylarosesims"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 							</ul>
 						</span>
 						<a href="#subscribe" class="open-modal"><span class="submit">Subscribe</span></a>

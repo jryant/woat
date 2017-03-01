@@ -30,10 +30,10 @@
 			<span class="follow">
 				<ul class="sm">
 					<li class="contact"><a href="#contact" class="open-modal"><span class="submit">Contact</span></a></li>
-					<li class="fb"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li	class="tw"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="fb"><a href="https://www.facebook.com/whaleofatalecontent/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li	class="tw"><a href="http://www.twitter.com/thewritewhale"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 					<li class="ig"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
-					<li class="li"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
+					<li class="li"><a href="https://ca.linkedin.com/in/kylarosesims"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/blank.png"></a></li>
 					<li class="subscribe"><a href="#subscribe" class="open-modal"><span class="submit">Subscribe</span></a></li>
 				</ul>
 			</span><!-- .follow -->

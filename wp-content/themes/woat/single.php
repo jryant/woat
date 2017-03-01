@@ -26,6 +26,8 @@ get_header(); ?>
 				'next_text'	=> '<span class="arrow"></span><span>NEXT</span>%title'
 			));
 
+			related_posts();
+
 			$meta = '<span class="meta">'.get_the_date().'<span class="sep">&nbsp;&bull;&nbsp;</span>';
 			switch (get_comments_number()){
 				case 0:

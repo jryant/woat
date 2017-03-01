@@ -142,10 +142,10 @@ var $j = jQuery.noConflict();
 			if(has_primary){
 				if(scroll >= primary_pos){
 					$("#mobile_menu").removeClass("white");
-					console.log(scroll + " > " + primary_pos);
+					// console.log(scroll + " > " + primary_pos);
 				} else {
 					$("#mobile_menu").addClass("white");
-					console.log(scroll + " < " + primary_pos);
+					// console.log(scroll + " < " + primary_pos);
 				}
 			}
 
@@ -153,7 +153,7 @@ var $j = jQuery.noConflict();
 
 		$('#menu').scrollToFixed({
 			marginTop: 20,
-			zIndex: 0
+			zIndex: 9
 		});
 
 		if($(window).width()>736){
@@ -219,8 +219,24 @@ var $j = jQuery.noConflict();
 			'side': 'right'
 		});
 
-		$('#mobile_menu ul.sm li.menu, #mobile_menu').on('click', function() {
+		$('#mobile_menu').scrollToFixed({
+			marginTop: 10,
+			zIndex: 11
+		});
+
+		var n = 0;
+		$('#mobile_menu').on('click', function(e) {
+			// console.log("click! "+e);
 			slideout.toggle();
+			$(this).css( "top", function( index ) {
+				if(n%2<1){
+					n++;
+	  			return $(window).scrollTop() + 10;
+				} else {
+					n++;
+					return 10;
+				}
+			});
 		});
 
 		$("#slideout_menu ul#panel-menu li a").on('click', function(e) {

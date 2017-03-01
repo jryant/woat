@@ -436,10 +436,10 @@ function get_menu(){
 				<div id="menu">
 					<ul class="sm">
 						<li class="menu"><a href="#"><img src="'.get_stylesheet_directory_uri().'/assets/blank.png"></a></li>
-						<li class="fb extra"><a href="#"><img src="'.get_stylesheet_directory_uri().'/assets/blank.png"></a></li>
-						<li	class="tw extra"><a href="#"><img src="'.get_stylesheet_directory_uri().'/assets/blank.png"></a></li>
+						<li class="fb extra"><a href="https://www.facebook.com/whaleofatalecontent/"><img src="'.get_stylesheet_directory_uri().'/assets/blank.png"></a></li>
+						<li	class="tw extra"><a href="http://www.twitter.com/thewritewhale"><img src="'.get_stylesheet_directory_uri().'/assets/blank.png"></a></li>
 						<li class="ig extra"><a href="#"><img src="'.get_stylesheet_directory_uri().'/assets/blank.png"></a></li>
-						<li class="li extra"><a href="#"><img src="'.get_stylesheet_directory_uri().'/assets/blank.png"></a></li>
+						<li class="li extra"><a href="https://ca.linkedin.com/in/kylarosesims"><img src="'.get_stylesheet_directory_uri().'/assets/blank.png"></a></li>
 						<li class="sub extra"><a href="#subscribe" class="open-modal"><img src="'.get_stylesheet_directory_uri().'/assets/blank.png"></a></li>
 					</ul>
 				</div>
