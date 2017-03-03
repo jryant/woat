@@ -26,9 +26,9 @@ get_header(); ?>
 				'next_text'	=> '<span class="arrow"></span><span>NEXT</span>%title'
 			));
 
-			related_posts();
+			// related_posts();
 
-			$meta = '<span class="meta">'.get_the_date().'<span class="sep">&nbsp;&bull;&nbsp;</span>';
+			$meta = '<div class="meta">'.get_the_date().'<span class="sep">&nbsp;&bull;&nbsp;</span>';
 			switch (get_comments_number()){
 				case 0:
 					$meta .= '0 comments';
@@ -40,8 +40,7 @@ get_header(); ?>
 					$meta .= get_comments_number().' comments';
 			}
 			// $blog_post .= '</section>';
-			echo '<section id="meta"><div>';
-			echo $meta; ?>
+			echo '<section id="meta"><div>'; ?>
 
 				<div class="note">
 					<aside>
@@ -62,6 +61,8 @@ get_header(); ?>
 					?>
 
 				</div><!-- .bio -->
+
+				<?php echo $meta; ?>
 
 			</div></section>
 

@@ -2657,6 +2657,83 @@ body.error404 #main form .search-submit:hover,
 	color: white;
 }
 
+body.single ol.comment-list {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+body.single ol.children {
+	margin-top: 30px;
+	list-style: none;
+}
+
+body.single ol.comment-list li {
+	font-family: Lato, sans-serif;
+	color: #666;
+	padding: 20px;
+	border: 1px solid #666;
+	border-radius: 10px;
+	margin-bottom: 15px;
+}
+
+body.single ol.comment-list li footer img {
+	width: 60px;
+	height: 60px;
+	border-radius: 50px;
+	border: 1px solid #666;
+	padding: 2px;
+	float: left;
+	margin-right: 20px;
+}
+
+body.single ol.comment-list li footer .fn {
+	font-family: Montserrat, sans-serif;
+	font-weight: bold;
+}
+
+body.single ol.comment-list li footer .says {
+	display: none;
+}
+
+body.single ol.comment-list li footer .comment-metadata a {
+	font-size: 0.8em;
+	text-transform: uppercase;
+	color: #666;
+	text-decoration: none;
+}
+
+body.single ol.comment-list li footer .comment-awaiting-moderation {
+	margin-left: 80px;
+	margin-bottom: 0px;
+	color: orange;
+	font-family: Montserrat, sans-serif;
+	text-transform: uppercase;
+	font-size: 0.9em;
+}
+
+body.single ol.comment-list li .comment-content,
+body.single ol.comment-list li .reply {
+	margin-left: 80px;
+}
+
+body.single ol.comment-list li .reply	a {
+	border: 1px solid #666;
+	border-radius: 5px;
+	font-family: Montserrat, sans-serif;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 0.9em;
+	color: #666;
+	text-decoration: none;
+	padding: 3px 9px;
+}
+
+body.single ol.comment-list li .reply	a:hover {
+	color: white;
+	border-color: #3ACCA7;
+	background-color: #3ACCA7;
+}
 
 
 @media screen and (max-width: 736px) {
@@ -3013,8 +3090,10 @@ body.single #meta > div {
 
 body.single #meta .meta {
 	font-family: Lato, sans-serif;
-	font-size: 0.9em;
+	font-size: 0.8em;
 	color: #5222b3;
+	margin-top: 30px;
+	text-transform: uppercase;
 }
 
 body.single #meta .note {
@@ -3032,7 +3111,7 @@ body.single #meta .note {
 
 body.single #meta .note aside {
 	float: left;
-	margin-right: 30px;
+	margin-right: 20px;
 }
 
 body.single #meta .note h1 {
@@ -3045,6 +3124,7 @@ body.single #meta .note h1 {
 
 body.single #meta .note p {
 	margin: 0;
+	margin-left: 80px;
 }
 
 body.single #coms {
