@@ -180,8 +180,14 @@ get_header(); ?>
 			<section id="tests">
 				<div>
 
-					<div class="slider">
+					<!-- <div class="slider">
 						<div class="logos"></div>
+					</div> -->
+
+					<div class="slider2">
+						<div class="logos">
+							<img class="first" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/logo-lineup.png" alt="" />
+						</div>
 					</div>
 
 					<div class="contain">

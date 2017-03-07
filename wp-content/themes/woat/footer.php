@@ -19,8 +19,11 @@
 		<br>No spammy stuff, I promise &mdash; just awesome content.</p>
 		<form>
 			<span class="sub_email"><input type="text" name="sub_email" placeholder="youremail@domain.com"></span>
-			<a href="#" class="open-modal"><span class="submit">Subscribe</span></a>
+			<span class="submit">Subscribe</span>
 		</form>
+		<div class="success">
+			<p>Thank you for subscribing!</p>
+		</div>
 	</div>
 
 	<section id="contact" style="display:none;">

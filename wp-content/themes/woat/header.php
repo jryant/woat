@@ -49,6 +49,27 @@ if (strpos($_SERVER['REQUEST_URI'], 'portfolio') !== FALSE && !is_user_logged_in
 var $j = jQuery.noConflict();
 
 	$j(document).ready(function($){
+
+		$("#subscribe form .submit").on("click", function(){
+			// e.preventDefault();
+			var email = $("#subscribe form input[type='text']").val();
+			console.log(email);
+
+			// $groupsApi = (new MailerLiteApi\MailerLite("f7808fae03657e871f6e70fbd6ff4970"))->groups();
+			//
+			// $subscriber = [
+			//     'email' => email,
+			//     'fields' => [
+			//         'name' => 'John',
+			//         'last_name' => 'Doe',
+			//         'company' => 'John Doe Co.'
+			//     ]
+			// ];
+			//
+			// $response = $groupsApi->addSubscriber(5560834, $subscriber); // Change GROUP_ID with ID of group you want to add subscriber to
+		});
+
+
 		$("#blog h1").each(function() {
 			// var text = $(this).text();
 			// console.log(text);
@@ -77,6 +98,12 @@ var $j = jQuery.noConflict();
 				$.scrollTo($(theurl), 500);
 				window.location = theurl;
 			}
+		});
+
+		$("#menu ul.sm li:not(.sub)").click(function(e){
+			var theurl = $(this).children("a").attr("href");
+			// console.log("manual redirect to "+theurl);
+			window.location = theurl;
 		});
 
 		var heads = new Array();
