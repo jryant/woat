@@ -96,26 +96,30 @@ var $j = jQuery.noConflict();
 				window.location = theurl;
 			} else {
 				$.scrollTo($(theurl), 500);
-				window.location = theurl;
+				setTimeout(function(){
+					window.location = theurl;
+				}, 500);
 			}
 		});
 
-		$("#menu ul.sm li:not(.sub)").click(function(e){
+		$("#menu ul.sm li:not(.sub)").click(function(){
 			var theurl = $(this).children("a").attr("href");
 			// console.log("manual redirect to "+theurl);
 			window.location = theurl;
 		});
 
-		var heads = new Array();
-		var heads_pos = new Array();
-		$("#main section").each(function(i, obj){
-			heads[i] = $(obj).attr("id");
-      heads_pos[i] = Math.floor($(obj).offset().top); // debug: when viewport width changes, recalculate
-    });
+		// if($("body").hasClass("home")){
+			var heads = new Array();
+			var heads_pos = new Array();
+			$("#main section").each(function(i, obj){
+				heads[i] = $(obj).attr("id");
+	      heads_pos[i] = Math.floor($(obj).offset().top); // debug: when viewport width changes, recalculate
+	    });
+		// }
 
 		var has_primary = false;
 		var primary_pos;
-		if($("body").hasClass("archive")){
+		if($("body").hasClass("archive") && $("body").hasClass("logged-in")){
 			primary_pos = Math.floor($("#primary").offset().top);
 			has_primary = true;
 			// console.log("has class, pos = "+primary_pos);
@@ -131,52 +135,54 @@ var $j = jQuery.noConflict();
 		// 	console.log(i+": "+heads[i]+" -> "+heads_pos[i]);
 		// }
 
-		$(window).scroll(function(){ // debug: specific page detection
-			var scroll = $(window).scrollTop();
-			// console.log("scroll = "+scroll);
-      $(heads_pos).each(function(i){
-      	if(scroll >= heads_pos[i]){
-        	$("#menu ul.sections li.active").removeClass("active");
-        	$("#menu ul.sections li."+heads[i]).addClass("active");
-					if(scroll >= heads_pos[1]-300 && scroll < heads_pos[1]){ // approaching Services
+		// if($("body").hasClass("home")){
+			$(window).scroll(function(){ // debug: specific page detection
+				var scroll = $(window).scrollTop();
+				// console.log("scroll = "+scroll);
+	      $(heads_pos).each(function(i){
+	      	if(scroll >= heads_pos[i]){
+	        	$("#menu ul.sections li.active").removeClass("active");
+	        	$("#menu ul.sections li."+heads[i]).addClass("active");
+						if(scroll >= heads_pos[1]-300 && scroll < heads_pos[1]){ // approaching Services
+							$("#menu ul.sections li.active").removeClass("active");
+						}
+						if(scroll >= heads_pos[3]-200 && scroll < heads_pos[3]){
+							$("#menu ul.sections li.active").removeClass("active");
+						}
+	      	}
+
+					if(scroll >= heads_pos[1]-300 && scroll < heads_pos[3]-200){
+						$("#menu").addClass("white");
+					} else {
+						$("#menu").removeClass("white");
+					}
+
+					if(scroll >= heads_pos[0] && scroll < heads_pos[1]){
+						$("#mobile_menu").removeClass("white");
+					} else if(scroll >= heads_pos[3]){
+						$("#mobile_menu").removeClass("white");
+					} else {
+						$("#mobile_menu").addClass("white");
+					}
+
+					if($(window).width()<=736 && scroll < heads_pos[0]){ // Deactivate "About" on mobile load
 						$("#menu ul.sections li.active").removeClass("active");
 					}
-					if(scroll >= heads_pos[3]-200 && scroll < heads_pos[3]){
-						$("#menu ul.sections li.active").removeClass("active");
+
+	    	});
+
+				if(has_primary){
+					if(scroll >= primary_pos){
+						$("#mobile_menu").removeClass("white");
+						// console.log(scroll + " > " + primary_pos);
+					} else {
+						$("#mobile_menu").addClass("white");
+						// console.log(scroll + " < " + primary_pos);
 					}
-      	}
-
-				if(scroll >= heads_pos[1]-300 && scroll < heads_pos[3]-200){
-					$("#menu").addClass("white");
-				} else {
-					$("#menu").removeClass("white");
 				}
 
-				if(scroll >= heads_pos[0] && scroll < heads_pos[1]){
-					$("#mobile_menu").removeClass("white");
-				} else if(scroll >= heads_pos[3]){
-					$("#mobile_menu").removeClass("white");
-				} else {
-					$("#mobile_menu").addClass("white");
-				}
-
-				if($(window).width()<=736 && scroll < heads_pos[0]){ // Deactivate "About" on mobile load
-					$("#menu ul.sections li.active").removeClass("active");
-				}
-
-    	});
-
-			if(has_primary){
-				if(scroll >= primary_pos){
-					$("#mobile_menu").removeClass("white");
-					// console.log(scroll + " > " + primary_pos);
-				} else {
-					$("#mobile_menu").addClass("white");
-					// console.log(scroll + " < " + primary_pos);
-				}
-			}
-
-    });
+	    });
+		// };
 
 		$('#menu').scrollToFixed({
 			marginTop: 20,
@@ -188,7 +194,7 @@ var $j = jQuery.noConflict();
 		}
 
 		$("#menu .sm .menu").click(function(){ // debug: hide again with delay after click?
-			if($("#menu .sections").css("visibility")=="visible"){
+			if($("#menu .sections").css("visibility")==="visible"){
 				$("#menu .sections, #menu .extra").css("visibility", "hidden");
 			} else {
 				$("#menu .sections, #menu .extra").css("visibility", "visible");
@@ -208,7 +214,7 @@ var $j = jQuery.noConflict();
 		  return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 
-		if(getRandomIntInclusive(0,1)==1 && $(window).width()<736){
+		if(getRandomIntInclusive(0,1)===1 && $(window).width()<736){
 			$("#masthead").css("background-position-x","right");
 		};
 
@@ -219,20 +225,6 @@ var $j = jQuery.noConflict();
 		// 	// console.log(scroll2+" / "+picY+" = "+opacity_perc);
 		// 	$("#about aside.pic img").css("opacity",opacity_perc);
 		// });
-
-		// $("#logos").bxSlider({
-		// 	minSlides: 4,
-		//   maxSlides: 10,
-		//   slideWidth: 200,
-		//   slideMargin: 20,
-		// 	ticker: true,
-  	// 	speed: 100000,
-		// 	randomStart: true,
-		// 	// startSlide: 10,
-		// 	preloadImages: "all"
-		// });
-		// var box = $('#box').data("plugin_tinycarousel");
-		// console.log(box);
 
 		var vw = $(document).width();
 		vw = vw*0.45;
@@ -252,7 +244,7 @@ var $j = jQuery.noConflict();
 		});
 
 		var n = 0;
-		$('#mobile_menu').on('click', function(e) {
+		$('#mobile_menu').on('click', function() {
 			// console.log("click! "+e);
 			slideout.toggle();
 			$(this).css( "top", function( index ) {
