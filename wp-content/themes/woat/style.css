@@ -1414,7 +1414,7 @@ body.single #masthead .logo {
 --------------------------------------------------------------*/
 
 #about {
-	padding: 285px 215px 200px 140px;
+	padding: 200px 215px 200px 140px;
 }
 
 #about article {
@@ -2617,7 +2617,7 @@ body.search #primary article .featured img {
 	border: 1px solid #5222b3;
 	border-radius: 5px;
 	max-width: 100%;
-	max-height: 330px;
+	/*max-height: 330px;*/
 }
 
 body.page-id-11 #primary article .featured { display: none; }

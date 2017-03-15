@@ -1,4 +1,4 @@
-<?php
+<?php error_reporting(E_ALL); // debug
 /**
  * The header for our theme
  *

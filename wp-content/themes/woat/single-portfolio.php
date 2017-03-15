@@ -21,6 +21,11 @@ get_header(); ?>
 
 			get_template_part( 'template-parts/bio', get_post_format() );
 
+			$prev_id = "";
+			$prev_co = "";
+			$next_id = "";
+			$next_co = "";
+
 			$prev_post = get_previous_post();
 			if (!empty( $prev_post )):
 				$prev_id = $prev_post->ID;
